@@ -20,7 +20,6 @@ export default function CustomDrawerContent({props, navigation}) {
             </View>
             <DrawerItem label="我的收藏" onPress={() => navigation.navigate('Favor')} 
                 icon={({ focused, color, size }) => {
-                    console.log('clolr: ', color, ' size: ', size)
                     return <Ionicons name={'heart'} color={'#696969'} size={size} /> }} />
             <DrawerItem label="关于作者" onPress={() => navigation.navigate('About')} 
                 icon={({ focused, color, size }) => <Ionicons name={'person'} color={'#696969'} size={size} />}/>
