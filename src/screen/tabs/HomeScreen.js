@@ -5,6 +5,7 @@ import globalStyles from '../../styles/globalStyles'
 import DefaultAvatar from '../../images/icon-default-avatar.png';
 import { fetchHomeBanner } from '../../actions'
 import { connect } from 'react-redux';
+import { get } from '../../service/httpHelper';
 
 /**
  * 首页
@@ -24,7 +25,20 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        fetchHomeBanner()
+        // initAxios()
+        // fetchHomeBanner()
+        get('banner/json').then(res => {
+            console.log('get success a: ', res)
+        }).catch(err => {
+            console.log('get error a: ', err)
+        })
+
+        get('article/list/0/json', {cid: 60}).then(res => {
+            console.log('get success b: ', res)
+        }).catch(err => {
+            console.log('get error b: ', err)
+        })
+
     }
 
     renderHeaderAvatar() {

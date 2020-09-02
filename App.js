@@ -1,22 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerStack from './src';
-import { initAxios } from './src/service/initAxios'
 import { Provider } from 'react-redux'
 import store from './src/store';
 
-export default function App() {
+export default class App extends Component {
 
-  useEffect(() => {
-    // 网络设置
-    initAxios()
-  })
+  componentDidMount() {
+  }
 
-  return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <DrawerStack />
-      </NavigationContainer>
-    </Provider>
-  );
+  render() {
+    return (
+      <Provider store={store}>
+        <NavigationContainer>
+          <DrawerStack />
+        </NavigationContainer>
+      </Provider>
+    )
+  }
 }

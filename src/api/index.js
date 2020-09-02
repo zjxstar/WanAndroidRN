@@ -7,6 +7,6 @@ import httpHelper from '../service/httpHelper'
 /**
  * 获取首页Banner列表
  */
-export function getHomeBanner() {
+export async function getHomeBanner() {
     return httpHelper.get('banner/json')
 }
