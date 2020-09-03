@@ -27,6 +27,7 @@ class HomeScreen extends Component {
     componentDidMount() {
         // initAxios()
         // fetchHomeBanner()
+
         get('banner/json').then(res => {
             console.log('get success a: ', res)
         }).catch(err => {
