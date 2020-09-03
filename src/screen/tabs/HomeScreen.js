@@ -1,11 +1,10 @@
 import React, { Component, PureComponent } from 'react';
-import { View, Text } from 'react-native';
-import { Header, Avatar } from 'react-native-elements';
+import { View, Text, Button } from 'react-native';
+import { Header, Avatar,  } from 'react-native-elements';
 import globalStyles from '../../styles/globalStyles'
 import DefaultAvatar from '../../images/icon-default-avatar.png';
-import { fetchHomeBanner } from '../../actions'
+import { fetchHomeBanner, fetchHomeTopArticles, fetchHomeArticles, fetchHomeArticlesMore } from '../../actions'
 import { connect } from 'react-redux';
-import { get } from '../../service/httpHelper';
 
 /**
  * 首页
@@ -22,29 +21,18 @@ class HomeScreen extends Component {
         }
         this.renderHeaderAvatar = this.renderHeaderAvatar.bind(this)
         this.renderBanner = this.renderBanner.bind(this)
+        this.refreshPage = this.refreshPage.bind(this)
+        this.loadMoreArticles = this.loadMoreArticles.bind(this)
     }
 
     componentDidMount() {
-        // initAxios()
-        // fetchHomeBanner()
-
-        get('banner/json').then(res => {
-            console.log('get success a: ', res)
-        }).catch(err => {
-            console.log('get error a: ', err)
-        })
-
-        get('article/list/0/json', {cid: 60}).then(res => {
-            console.log('get success b: ', res)
-        }).catch(err => {
-            console.log('get error b: ', err)
-        })
-
+        // this.props.fetchHomeBanner()
+        // this.props.fetchTopArticles()
+        this.props.fetchArticles()
     }
 
     renderHeaderAvatar() {
         const { navigation, isLogin } = this.props
-        console.log('isLogin: ', isLogin)
         if (isLogin) {
             return (
                 <Avatar
@@ -69,8 +57,21 @@ class HomeScreen extends Component {
     }
 
     renderBanner() {
-        const { homeBanner } = this.props
-        console.log('homeBanner render: ', homeBanner)
+        const { homeBanner, topArticles, page, articles } = this.props
+        // console.log('homeBanner render: ', homeBanner)
+        // console.log('top articles render: ', topArticles)
+        console.log(`articles page: ${page} , length: ${articles.length}`)
+    }
+
+    refreshPage() {
+        // TODO 刷新页面：Banner和第一页文章列表
+        this.props.fetchArticles()
+    }
+
+    loadMoreArticles() {
+        let { page } = this.props
+        console.log('load more page: ', page)
+        this.props.fetchArticlesMore(page)
     }
 
     render() {
@@ -85,6 +86,8 @@ class HomeScreen extends Component {
                     rightComponent={{ icon: 'search', color: '#fff', onPress: () => navigation.navigate('Search') }} />
                 
             <Text>这是首页</Text>
+            <Button title="load more" onPress={() => {this.loadMoreArticles()}} />
+            <Button title="Refresh" onPress={() => {this.refreshPage()}} />
                 
             </View>
         )
@@ -93,8 +96,22 @@ class HomeScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        homeBanner: state.home.homeBanner
+        homeBanner: state.home.homeBanner,
+        topArticles: state.home.topArticles,
+        page: state.home.page,
+        articlesObj: state.home.articlesObj,
+        articles: state.home.articles,
+        isFullData: state.home.isFullData
     }
 }
 
-export default connect(mapStateToProps)(HomeScreen)
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchHomeBanner: () => dispatch(fetchHomeBanner()),
+        fetchTopArticles: () => dispatch(fetchHomeTopArticles()),
+        fetchArticles: () => dispatch(fetchHomeArticles()),
+        fetchArticlesMore: (page) => dispatch(fetchHomeArticlesMore(page)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

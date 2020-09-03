@@ -11,7 +11,7 @@ const instance = axios.create({
 
 // 设置请求时的拦截器，补充Cookie
 instance.interceptors.request.use(config => {
-    console.log('default config: ', config)
+    // console.log('default config: ', config)
     return config
 }, error => {
     return Promise.reject(error)
