@@ -26,9 +26,9 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        // this.props.fetchHomeBanner()
-        // this.props.fetchTopArticles()
-        this.props.fetchArticles()
+        // this.props.reqHomeBanner()
+        // this.props.reqTopArticles()
+        this.props.reqArticles()
     }
 
     renderHeaderAvatar() {
@@ -65,13 +65,13 @@ class HomeScreen extends Component {
 
     refreshPage() {
         // TODO 刷新页面：Banner和第一页文章列表
-        this.props.fetchArticles()
+        this.props.reqArticles()
     }
 
     loadMoreArticles() {
         let { page } = this.props
         console.log('load more page: ', page)
-        this.props.fetchArticlesMore(page)
+        this.props.reqArticlesMore(page)
     }
 
     render() {
@@ -107,10 +107,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchHomeBanner: () => dispatch(fetchHomeBanner()),
-        fetchTopArticles: () => dispatch(fetchHomeTopArticles()),
-        fetchArticles: () => dispatch(fetchHomeArticles()),
-        fetchArticlesMore: (page) => dispatch(fetchHomeArticlesMore(page)),
+        reqHomeBanner: () => dispatch(fetchHomeBanner()),
+        reqTopArticles: () => dispatch(fetchHomeTopArticles()),
+        reqArticles: () => dispatch(fetchHomeArticles()),
+        reqArticlesMore: (page) => dispatch(fetchHomeArticlesMore(page)),
     }
 }
 
