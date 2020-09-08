@@ -1,10 +1,14 @@
 import React, { Component, PureComponent } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, FlatList } from 'react-native';
 import { Header, Avatar,  } from 'react-native-elements';
 import globalStyles from '../../styles/globalStyles'
 import DefaultAvatar from '../../images/icon-default-avatar.png';
 import { fetchHomeBanner, fetchHomeTopArticles, fetchHomeArticles, fetchHomeArticlesMore } from '../../actions'
 import { connect } from 'react-redux';
+import Banner from '../../components/Banner';
+import ArticleItem from '../../components/ArticleItem';
+import CommonFlatList from '../../components/CommonFlatList';
+
 
 /**
  * 首页
@@ -17,17 +21,19 @@ class HomeScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            avatarUrl: DefaultAvatar
+            avatarUrl: DefaultAvatar,
+            isRefreshing: false
         }
         this.renderHeaderAvatar = this.renderHeaderAvatar.bind(this)
-        this.renderBanner = this.renderBanner.bind(this)
+        this.renderListHeader = this.renderListHeader.bind(this)
+        this.renderListItem = this.renderListItem.bind(this)
         this.refreshPage = this.refreshPage.bind(this)
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
     }
 
     componentDidMount() {
-        // this.props.reqHomeBanner()
-        // this.props.reqTopArticles()
+        this.props.reqHomeBanner()
+        this.props.reqTopArticles()
         this.props.reqArticles()
     }
 
@@ -56,16 +62,37 @@ class HomeScreen extends Component {
         }
     }
 
-    renderBanner() {
-        const { homeBanner, topArticles, page, articles } = this.props
-        // console.log('homeBanner render: ', homeBanner)
-        // console.log('top articles render: ', topArticles)
-        console.log(`articles page: ${page} , length: ${articles.length}`)
+    renderListHeader() {
+        const { homeBanner, navigation } = this.props
+
+        return (
+            <View>
+                <Banner dataArr={homeBanner} navigation={navigation} />
+                <View style={{height: 10}} />
+            </View>
+        )
     }
 
-    refreshPage() {
-        // TODO 刷新页面：Banner和第一页文章列表
-        this.props.reqArticles()
+    renderListItem({item, index}) {
+        const { navigation } = this.props
+
+        return (
+            <ArticleItem navigation={navigation} item={item} />
+        )
+    }
+
+    async refreshPage() {
+        console.log('refresh page')
+        this.setState({
+            isRefreshing: true
+        })
+        await Promise.all([this.props.reqHomeBanner(), this.props.reqTopArticles(), this.props.reqArticles()])
+        
+        console.log('refresh page end')
+        this.setState({
+            isRefreshing: false
+        })
+        
     }
 
     loadMoreArticles() {
@@ -75,20 +102,23 @@ class HomeScreen extends Component {
     }
 
     render() {
-        const { navigation } = this.props
-        this.renderBanner()
-
+        const { navigation, topArticles, articles } = this.props
+        let allArticles = topArticles.concat(articles)
         return (
             <View style={globalStyles.container}>
                 <Header 
                     leftComponent={ this.renderHeaderAvatar() }
                     centerComponent={{ text: '首页', style: { color: '#fff', fontSize: 20 } }}
-                    rightComponent={{ icon: 'search', color: '#fff', onPress: () => navigation.navigate('Search') }} />
+                    rightComponent={{ icon: 'search', color: '#fff', size: 28, onPress: () => navigation.navigate('Search') }} />
                 
-            <Text>这是首页</Text>
-            <Button title="load more" onPress={() => {this.loadMoreArticles()}} />
-            <Button title="Refresh" onPress={() => {this.refreshPage()}} />
-                
+                <CommonFlatList 
+                    data={allArticles} 
+                    renderItem={this.renderListItem}
+                    keyExtractor={(item, index) => item.id.toString()}
+                    ListHeaderComponent={this.renderListHeader}
+                    onEndReached={this.loadMoreArticles}
+                    refreshing={this.state.isRefreshing}
+                    onRefresh={this.refreshPage} />
             </View>
         )
     }

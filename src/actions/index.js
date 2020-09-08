@@ -17,7 +17,12 @@ import {
 export function fetchHomeBanner() {
     return dispatch => {
         return getHomeBanner().then(
-            res => dispatch(getHomeBannerAction(res.data))
+            
+            res => {
+                console.log('home banner suc')
+                dispatch(getHomeBannerAction(res.data))}
+        ).catch(
+            err => console.log('home banner err: ', err)
         )
     }
 }
@@ -28,7 +33,12 @@ export function fetchHomeBanner() {
 export function fetchHomeTopArticles() {
     return dispatch => {
         return getHomeTopArticles().then(
-            res => dispatch(getHomeTopArticlesAction(res.data))
+            
+            res => {
+                console.log('home top article suc')
+                dispatch(getHomeTopArticlesAction(res.data))}
+        ).catch(
+            err => console.log('home top article err: ', err)
         )
     }
 }
@@ -39,9 +49,13 @@ export function fetchHomeTopArticles() {
 export function fetchHomeArticles() {
     return dispatch => {
         return getHomeArticles().then(
-            res => dispatch(getHomeArticlesAction(res.data))
+            res => {
+                console.log('home article suc')
+                dispatch(getHomeArticlesAction(res.data))}
         ).catch(
-            err => dispatch(getHomeArticlesFailureAction())
+            err => {
+                console.log('home article err: ', err)
+                dispatch(getHomeArticlesFailureAction())}
         )
     }
 }
