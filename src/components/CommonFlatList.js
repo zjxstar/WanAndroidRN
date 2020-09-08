@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, RefreshControl, FlatList } from 'react-native';
-import { DEVICE_HEIGHT } from '../utils/screenUtil';
+import { DEVICE_HEIGHT, getRealDP as dp } from '../utils/screenUtil';
 import Color from '../styles/color';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -52,7 +52,7 @@ class CommonFlatList extends PureComponent {
                 {this.state.isShowTop && 
                     <TouchableWithoutFeedback onPress={this._handleScrollTop}>
                         <View style={styles.topBtn}>
-                            <Ionicons name='chevron-up-circle' size={60} color={Color.BLUE} />
+                        <Ionicons name='chevron-up-circle' size={dp(80)} color={Color.THEME} />
                         </View>
                     </TouchableWithoutFeedback>}
             </View>
@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
     },
     topBtn: {
         position: 'absolute',
-        bottom: 40,
-        right: 30,
+        bottom: dp(50),
+        right: dp(40),
     }
 })
 

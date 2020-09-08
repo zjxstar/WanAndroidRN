@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'react-native-elements';
 import Swiper from 'react-native-swiper'
 import PropTypes from 'prop-types';
-import { DEVICE_WIDTH } from '../utils/screenUtil';
+import { DEVICE_WIDTH, getRealDP as dp } from '../utils/screenUtil';
 import Color from '../styles/color';
 
 const propTypes = {
@@ -49,8 +49,7 @@ class Banner extends PureComponent {
                     loop={true}
                     autoplay={true}
                     showsPagination={false}
-                    onIndexChanged={this.getCurrentImgIndex}
-                    >
+                    onIndexChanged={this.getCurrentImgIndex}>
                     {dataArr.map(data => (
                         <Image style={styles.imgBanner} source={{ uri: data.imagePath}} />
                     ))}
@@ -68,7 +67,7 @@ class Banner extends PureComponent {
     }
 }
 
-const imageHeight = 320
+const imageHeight = dp(400)
 const styles = StyleSheet.create({
     defaultBg: {
         height: imageHeight,
@@ -92,16 +91,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 16,
+        paddingHorizontal: dp(16),
         backgroundColor: 'rgba(0,0,0,0.3)',
-        height: 50,
+        height: dp(50),
         bottom: 0,
         left: 0,
         position: 'absolute',
     },
     bannerText: {
         color: Color.WHITE,
-        fontSize: 20,
+        fontSize: dp(24),
     },
 });
 

@@ -1,5 +1,5 @@
-import React, { Component, PureComponent } from 'react';
-import { View, Text, Button, FlatList } from 'react-native';
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import { Header, Avatar,  } from 'react-native-elements';
 import globalStyles from '../../styles/globalStyles'
 import DefaultAvatar from '../../images/icon-default-avatar.png';
@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import Banner from '../../components/Banner';
 import ArticleItem from '../../components/ArticleItem';
 import CommonFlatList from '../../components/CommonFlatList';
+import Color from '../../styles/color';
+import { getRealDP as dp } from '../../utils/screenUtil';
 
 
 /**
@@ -47,7 +49,7 @@ class HomeScreen extends Component {
                         uri: 'https://wx.qlogo.cn/mmopen/vi_32/eudayfvoav2bibTSsiaxWyLW6gMqTF32RPT6hULQ9Z6wrtjU97SkVOLOdlYujdKDFic34wuib9dwIcBQbUkRtJI2MA/132'
                     }}
                     onPress={() => navigation.toggleDrawer()}
-                    size={28}
+                    size={dp(40)}
                     activeOpacity={0.7} />
             )
         } else {
@@ -56,7 +58,7 @@ class HomeScreen extends Component {
                     rounded 
                     source={require('../../images/icon-default-avatar.png')}
                     onPress={() => navigation.toggleDrawer()}
-                    size={28}
+                    size={dp(40)}
                     activeOpacity={0.7} />
             )
         }
@@ -68,7 +70,7 @@ class HomeScreen extends Component {
         return (
             <View>
                 <Banner dataArr={homeBanner} navigation={navigation} />
-                <View style={{height: 10}} />
+                <View style={{height: dp(20)}} />
             </View>
         )
     }
@@ -82,17 +84,15 @@ class HomeScreen extends Component {
     }
 
     async refreshPage() {
-        console.log('refresh page')
         this.setState({
             isRefreshing: true
         })
+
         await Promise.all([this.props.reqHomeBanner(), this.props.reqTopArticles(), this.props.reqArticles()])
         
-        console.log('refresh page end')
         this.setState({
             isRefreshing: false
         })
-        
     }
 
     loadMoreArticles() {
@@ -107,9 +107,10 @@ class HomeScreen extends Component {
         return (
             <View style={globalStyles.container}>
                 <Header 
+                    backgroundColor={Color.THEME}
                     leftComponent={ this.renderHeaderAvatar() }
-                    centerComponent={{ text: '首页', style: { color: '#fff', fontSize: 20 } }}
-                    rightComponent={{ icon: 'search', color: '#fff', size: 28, onPress: () => navigation.navigate('Search') }} />
+                    centerComponent={{ text: '首页', style: { color: Color.WHITE, fontSize: dp(30) } }}
+                    rightComponent={{ icon: 'search', color: Color.WHITE, size: dp(40), onPress: () => navigation.navigate('Search') }} />
                 
                 <CommonFlatList 
                     data={allArticles} 
