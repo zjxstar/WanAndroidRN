@@ -5,7 +5,7 @@ import globalStyles from '../../styles/globalStyles'
 /**
  * 公众号
  */
-export default class HomeScreen extends Component {
+export default class WeChatArticleScreen extends Component {
     render() {
         return (
             <View style={globalStyles.container}>

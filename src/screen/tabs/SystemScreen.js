@@ -5,7 +5,7 @@ import globalStyles from '../../styles/globalStyles'
 /**
  * 知识体系
  */
-export default class HomeScreen extends Component {
+export default class SystemScreen extends Component {
     render() {
         return (
             <View style={globalStyles.container}>

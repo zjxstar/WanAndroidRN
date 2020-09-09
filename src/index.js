@@ -18,29 +18,35 @@ import RegisterScreen from './screen/drawer/RegisterScreen';
 import SearchScreen from './screen/article/SearchScreen';
 import WebViewScreen from './screen/article/WebViewScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getRealDP as dp } from './utils/screenUtil';
 
 const Tab = createBottomTabNavigator()
 
 const TabsConfig = {
     Home: {
         name: '首页',
-        iconName: 'md-home'
+        iconFocused: 'md-home',
+        iconNormal: 'md-home-outline'
     },
     System: {
         name: '体系',
-        iconName: 'md-book'
+        iconFocused: 'md-book',
+        iconNormal: 'md-book-outline'
     },
     WeChatArticle: {
         name: '公众号',
-        iconName: 'md-chatbubbles'
+        iconFocused: 'md-chatbubbles',
+        iconNormal: 'md-chatbubbles-outline'
     },
     Navigation: {
         name: '导航',
-        iconName: 'paper-plane'
+        iconFocused: 'paper-plane',
+        iconNormal: 'paper-plane-outline'
     },
     Project: {
         name: '项目',
-        iconName: 'md-document-attach'
+        iconFocused: 'md-document-attach',
+        iconNormal: 'md-document-attach-outline'
     }
 }
 
@@ -49,11 +55,11 @@ function TabStack() {
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
-                    let iconName = TabsConfig[route.name].iconName
-                    return <Ionicons name={iconName} size={size} color={color}/>
+                    let iconName = focused ? TabsConfig[route.name].iconFocused : TabsConfig[route.name].iconNormal
+                    return <Ionicons name={iconName} size={dp(44)} color={color}/>
                 },
-                tabBarLabel: ({ focused, color }) => {
-                    return <Text style={{color: color}}>{TabsConfig[route.name].name}</Text>
+                tabBarLabel: ({ color }) => {
+                    return <Text style={{color: color, fontSize: dp(22)}}>{TabsConfig[route.name].name}</Text>
                 }
             })}>
             <Tab.Screen name="Home" component={HomeScreen} />
@@ -79,7 +85,7 @@ const Stack = createStackNavigator()
 
 function RootStack() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator headerMode='none'>
             <Stack.Screen name="Drawer" component={DrawerStack} options={{ headerShown: false }} />
             <Stack.Screen name="Favor" component={FavorScreen} />
             <Stack.Screen name="About" component={AboutScreen} />

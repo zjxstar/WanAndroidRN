@@ -1,0 +1,14 @@
+/**
+ * redux 的 action 各种 type 
+ */
+
+const actionTypes = {
+    // Home Screen
+    FETCH_HOME_BANNER: 'FETCH_HOME_BANNER',
+    FETCH_HOME_TOP_ARTICLES: 'FETCH_HOME_TOP_ARTICLES',
+    FETCH_HOME_ARTICLES: 'FETCH_HOME_ARTICLES',
+    FETCH_HOME_ARTICLES_MORE: 'FETCH_HOME_ARTICLES_MORE',
+    FETCH_HOME_ARTICLES_FAILURE: 'FETCH_HOME_ARTICLES_FAILURE'
+}
+
+export default actionTypes

@@ -5,7 +5,7 @@ import globalStyles from '../../styles/globalStyles'
 /**
  * 我的收藏
  */
-export default class HomeScreen extends Component {
+export default class FavorScreen extends Component {
     render() {
         return (
             <View style={globalStyles.container}>
