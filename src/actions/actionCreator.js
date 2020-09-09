@@ -37,3 +37,43 @@ export function getHomeArticlesFailureAction() {
         type: actionTypes.FETCH_HOME_ARTICLES_FAILURE
     }
 }
+
+export function startFetchSystemTreeAction(isFetching) {
+    return {
+        type: actionTypes.FETCH_SYSTEM_TREE_START,
+        isFetching
+    }
+}
+
+export function getSystemTreeAction(systemTree) {
+    return {
+        type: actionTypes.FETCH_SYSTEM_TREE,
+        systemTree,
+    }
+}
+
+export function getSystemTreeFailureAction() {
+    return {
+        type: actionTypes.FETCH_SYSTEM_TREE_FAILURE,
+    }
+}
+
+export function getSystemTreeArticlesAction(articlesObj) {
+    return {
+        type: actionTypes.FETCH_STSTEM_TREE_ARTICLES,
+        articlesObj
+    }
+}
+
+export function getSystemTreeArticlesMoreAction(articlesObj) {
+    return {
+        type: actionTypes.FETCH_STSTEM_TREE_ARTICLES_MORE,
+        articlesObj
+    }
+}
+
+export function getSystemTreeArticlesFailureAction() {
+    return {
+        type: actionTypes.FETCH_SYSTEM_TREE_FAILURE,
+    }
+}

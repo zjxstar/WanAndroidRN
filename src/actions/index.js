@@ -3,12 +3,20 @@ import {
     getHomeTopArticlesAction,
     getHomeArticlesMoreAction,
     getHomeArticlesFailureAction,
-    getHomeArticlesAction
+    getHomeArticlesAction,
+    getSystemTreeAction,
+    startFetchSystemTreeAction,
+    getSystemTreeFailureAction,
+    getSystemTreeArticlesAction,
+    getSystemTreeArticlesFailureAction,
+    getSystemTreeArticlesMoreAction,
 } from './actionCreator';
 import { 
     getHomeBanner, 
     getHomeTopArticles,
-    getHomeArticles
+    getHomeArticles,
+    getSystemTree,
+    getSystemTreeArticles,
 } from '../api';
 
 /**
@@ -70,6 +78,23 @@ export function fetchHomeArticlesMore(page) {
             res => dispatch(getHomeArticlesMoreAction(res.data))
         ).catch(
             err => dispatch(getHomeArticlesFailureAction())
+        )
+    }
+}
+
+/**
+ * 知识体系页面分类数据
+ */
+export function fetchSystemTree() {
+    return dispatch => {
+        dispatch(startFetchSystemTreeAction(true))
+        return getSystemTree().then(
+            
+            res => {
+                dispatch(getSystemTreeAction(res.data))}
+        ).catch(
+            err => {
+                dispatch(getSystemTreeFailureAction())}
         )
     }
 }

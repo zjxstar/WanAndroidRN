@@ -55,13 +55,11 @@ class HeaderBar extends PureComponent {
     render() {
         const { navigation, title } = this.props
         return (
-            <View>
             <Header
                 backgroundColor={Color.THEME}
                 leftComponent={this.renderHeaderAvatar()}
                 centerComponent={{ text: title, style: { color: Color.WHITE, fontSize: dp(30) } }}
                 rightComponent={{ icon: 'search', color: Color.WHITE, size: dp(40), onPress: () => navigation.navigate('Search') }} />
-            </View>
         )
     }
 }

@@ -83,7 +83,7 @@ class HomeScreen extends Component {
                     renderItem={this.renderListItem}
                     keyExtractor={(item, index) => item.id.toString()}
                     ListHeaderComponent={this.renderListHeader}
-                    onEndReached={this.loadMoreArticles}
+                    onEndReached={() => {this.loadMoreArticles()}}
                     refreshing={this.state.isRefreshing}
                     onRefresh={this.refreshPage} />
             </View>
