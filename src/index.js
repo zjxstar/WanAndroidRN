@@ -85,7 +85,7 @@ const Stack = createStackNavigator()
 
 function RootStack() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator headerMode='none'>
             <Stack.Screen name="Drawer" component={DrawerStack} options={{ headerShown: false }} />
             <Stack.Screen name="Favor" component={FavorScreen} />
             <Stack.Screen name="About" component={AboutScreen} />

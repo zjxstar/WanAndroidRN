@@ -10,16 +10,31 @@ import { getRealDP as dp } from '../utils/screenUtil';
  */
 class ArticleItem extends PureComponent {
 
+    constructor(props) {
+        super(props)
+        this.toWebView = this.toWebView.bind(this)
+    }
+
+    toWebView(item) {
+        const { navigation } = this.props
+        const { title, link } = item
+        let url = link
+        navigation.navigate('WebView', {
+            title,
+            url
+        })
+    }
+
     render() {
-        let { item, navigation } = this.props
+        let { item } = this.props
         return (
-            <TouchableWithoutFeedback style={styles.container} onPress={() => { console.log(item.link) }}>
+            <TouchableWithoutFeedback style={styles.container} onPress={() => { this.toWebView(item) }}>
                 <View style={styles.itemWrapper} >
                     <View style={styles.lineOne}>
                         <View style={styles.lineContentLeft}>
                             {item.type === 1 && <Tag tagName='置顶' tagColor='red'/>}
                             {item.fresh && <Tag tagName='新' tagColor='red'/>}
-                            {item.tags.map((tag) => (<Tag tagName={tag.name} tagColor='green'/>))}
+                            {item.tags.map((tag) => (<Tag key={tag.url} tagName={tag.name} tagColor='green'/>))}
                             <Text style={{ marginLeft: dp(2), fontSize: dp(26), color: Color.TEXT_DARK}}>{item.author || item.shareUser}</Text>
                         </View>
                         <Text style={{ fontSize: dp(26), color: Color.TEXT_DARK}}>{item.niceDate}</Text>

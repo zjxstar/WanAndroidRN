@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Image } from 'react-native-elements';
 import Swiper from 'react-native-swiper'
 import PropTypes from 'prop-types';
@@ -28,15 +28,24 @@ class Banner extends PureComponent {
             currentBannerIndex: 0,
         }
         this.getCurrentImgIndex = this.getCurrentImgIndex.bind(this)
+        this.toWebView = this.toWebView.bind(this)
     }
 
     getCurrentImgIndex(imageIndex) {
         this.setState({ currentBannerIndex: imageIndex });
     }
 
+    toWebView(data) {
+        const { navigation } = this.props
+        const { title, url } = data
+        navigation.navigate('WebView', {
+            title, 
+            url
+        })
+    }
 
     render() {
-        const { dataArr } = this.props
+        const { dataArr, navigation } = this.props
         let dataCount = dataArr.length
         if (!dataCount) {
             return <View style={styles.defaultBg} />
@@ -51,7 +60,11 @@ class Banner extends PureComponent {
                     showsPagination={false}
                     onIndexChanged={this.getCurrentImgIndex}>
                     {dataArr.map(data => (
-                        <Image style={styles.imgBanner} source={{ uri: data.imagePath}} />
+                        <Image 
+                            key={data.id.toString()} 
+                            style={styles.imgBanner} 
+                            source={{ uri: data.imagePath }} 
+                            onPress={() => this.toWebView(data)}/>
                     ))}
                 </Swiper>
                 <View style={styles.bannerHint}>
