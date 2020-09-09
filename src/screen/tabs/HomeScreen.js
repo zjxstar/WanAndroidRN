@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Header, Avatar,  } from 'react-native-elements';
 import globalStyles from '../../styles/globalStyles'
-import DefaultAvatar from '../../images/icon-default-avatar.png';
 import { fetchHomeBanner, fetchHomeTopArticles, fetchHomeArticles, fetchHomeArticlesMore } from '../../actions'
 import { connect } from 'react-redux';
 import Banner from '../../components/Banner';
 import ArticleItem from '../../components/ArticleItem';
 import CommonFlatList from '../../components/CommonFlatList';
-import Color from '../../styles/color';
 import { getRealDP as dp } from '../../utils/screenUtil';
+import HeaderBar from '../../components/HeaderBar';
 
 
 /**
@@ -23,45 +21,16 @@ class HomeScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            avatarUrl: DefaultAvatar,
             isRefreshing: false
         }
-        this.renderHeaderAvatar = this.renderHeaderAvatar.bind(this)
         this.renderListHeader = this.renderListHeader.bind(this)
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshPage = this.refreshPage.bind(this)
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
     }
 
-    componentDidMount() {
-        this.props.reqHomeBanner()
-        this.props.reqTopArticles()
-        this.props.reqArticles()
-    }
-
-    renderHeaderAvatar() {
-        const { navigation, isLogin } = this.props
-        if (isLogin) {
-            return (
-                <Avatar
-                    rounded 
-                    source={ {
-                        uri: 'https://wx.qlogo.cn/mmopen/vi_32/eudayfvoav2bibTSsiaxWyLW6gMqTF32RPT6hULQ9Z6wrtjU97SkVOLOdlYujdKDFic34wuib9dwIcBQbUkRtJI2MA/132'
-                    }}
-                    onPress={() => navigation.toggleDrawer()}
-                    size={dp(40)}
-                    activeOpacity={0.7} />
-            )
-        } else {
-            return (
-                <Avatar
-                    rounded 
-                    source={require('../../images/icon-default-avatar.png')}
-                    onPress={() => navigation.toggleDrawer()}
-                    size={dp(40)}
-                    activeOpacity={0.7} />
-            )
-        }
+    async componentDidMount() {
+        await this.refreshPage()
     }
 
     renderListHeader() {
@@ -106,12 +75,9 @@ class HomeScreen extends Component {
         let allArticles = topArticles.concat(articles)
         return (
             <View style={globalStyles.container}>
-                <Header 
-                    backgroundColor={Color.THEME}
-                    leftComponent={ this.renderHeaderAvatar() }
-                    centerComponent={{ text: '首页', style: { color: Color.WHITE, fontSize: dp(30) } }}
-                    rightComponent={{ icon: 'search', color: Color.WHITE, size: dp(40), onPress: () => navigation.navigate('Search') }} />
                 
+                <HeaderBar title='首页' navigation={navigation} isLogin={false} />
+
                 <CommonFlatList 
                     data={allArticles} 
                     renderItem={this.renderListItem}
