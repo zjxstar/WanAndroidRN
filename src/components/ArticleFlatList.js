@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import globalStyles from '../styles/globalStyles'
 import ArticleItem from '../components/ArticleItem';
 import CommonFlatList from '../components/CommonFlatList';
-import { getSystemTreeArticles } from '../api/index';
+import { getSystemTreeArticles, getWXArticles } from '../api';
 import { getRealDP as dp } from '../utils/screenUtil';
 
 /**
@@ -45,58 +45,102 @@ class ArticleFlatList extends PureComponent {
     }
 
     refreshList() {
-        const { cid } = this.props
+        const { cid, isWX } = this.props
         let that = this
         console.log('fresh system tree a cid: ', cid)
         this.setState({
             isFetching: true
         })
-        getSystemTreeArticles(cid).then(
-            res => {
-                let articlesObj = res.data
-                that.setState({
-                    isFetching: false,
-                    page: 1,
-                    articlesObj: articlesObj,
-                    articles: articlesObj.datas,
-                    isFullData: articlesObj.curPage === articlesObj.pageCount
-                })
-            }
-        ).catch(
-            err => {
-                console.log('refresh articles err: ', err)
-                that.setState({
-                    isFetching: false,
-                })
-            }
-        )
+        if (isWX) {
+            getWXArticles(cid).then(
+                res => {
+                    let articlesObj = res.data
+                    that.setState({
+                        isFetching: false,
+                        page: 2,
+                        articlesObj: articlesObj,
+                        articles: articlesObj.datas,
+                        isFullData: articlesObj.curPage === articlesObj.pageCount
+                    })
+                }
+            ).catch(
+                err => {
+                    console.log('refresh articles err: ', err)
+                    that.setState({
+                        isFetching: false,
+                    })
+                }
+            )
+        } else {
+            getSystemTreeArticles(cid).then(
+                res => {
+                    let articlesObj = res.data
+                    that.setState({
+                        isFetching: false,
+                        page: 1,
+                        articlesObj: articlesObj,
+                        articles: articlesObj.datas,
+                        isFullData: articlesObj.curPage === articlesObj.pageCount
+                    })
+                }
+            ).catch(
+                err => {
+                    console.log('refresh articles err: ', err)
+                    that.setState({
+                        isFetching: false,
+                    })
+                }
+            )
+        }
+        
     }
 
     loadMoreArticles() {
-        const { cid } = this.props
+        const { cid, isWX } = this.props
         if (this.state.isFullData) {
             return
         }
         let that = this
         console.log('load more s t a page: ', this.state.page, ' cid: ', cid)
-        getSystemTreeArticles(cid, this.state.page).then(
-            res => {
-                let articlesObj = res.data
-                that.setState({
-                    isFetching: false,
-                    page: ++that.state.page,
-                    articles: that.state.articles.concat(articlesObj.datas),
-                    isFullData: articlesObj.datas.length === 0
-                })
-            }
-        ).catch(
-            err => {
-                console.log('load more articles err: ', err)
-                that.setState({
-                    isFetching: false,
-                })
-            }
-        )
+        if (isWX) {
+            getWXArticles(cid, this.state.page).then(
+                res => {
+                    let articlesObj = res.data
+                    that.setState({
+                        isFetching: false,
+                        page: ++that.state.page,
+                        articles: that.state.articles.concat(articlesObj.datas),
+                        isFullData: articlesObj.datas.length === 0
+                    })
+                }
+            ).catch(
+                err => {
+                    console.log('load more articles err: ', err)
+                    that.setState({
+                        isFetching: false,
+                    })
+                }
+            )
+        } else {
+            getSystemTreeArticles(cid, this.state.page).then(
+                res => {
+                    let articlesObj = res.data
+                    that.setState({
+                        isFetching: false,
+                        page: ++that.state.page,
+                        articles: that.state.articles.concat(articlesObj.datas),
+                        isFullData: articlesObj.datas.length === 0
+                    })
+                }
+            ).catch(
+                err => {
+                    console.log('load more articles err: ', err)
+                    that.setState({
+                        isFetching: false,
+                    })
+                }
+            )
+        }
     }
 
     render() {

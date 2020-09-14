@@ -42,3 +42,19 @@ export function getSystemTree() {
 export function getSystemTreeArticles(cid, page = 0) {
     return get(`article/list/${page}/json?cid=${cid}`)
 }
+
+/**
+ * 获取微信公众号
+ */
+export function getWXTabs() {
+    return get('wxarticle/chapters/json')
+}
+
+/**
+ * 获取某个公众号下的历史文章
+ * @param {Number}} id 微信公众号id
+ * @param {Number} page 分页码，从1开始
+ */
+export function getWXArticles(id, page = 1) {
+    return get(`wxarticle/list/${id}/${page}/json`)
+}
