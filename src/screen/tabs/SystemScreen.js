@@ -26,6 +26,9 @@ class SystemScreen extends PureComponent {
 
     renderListItem({ item, index }) {
         const { navigation } = this.props
+        if (item.children.length == 0) {
+            return null
+        }
         return (
             <SystemCard classification={item} navigation={navigation} />
         )
@@ -44,7 +47,6 @@ class SystemScreen extends PureComponent {
 
     render() {
         const { isFetching, systemTree, navigation } = this.props
-        console.log(' isloading : ', isFetching)
         return (
             <View style={globalStyles.container}>
                 <HeaderBar title='知识体系' navigation={navigation} />

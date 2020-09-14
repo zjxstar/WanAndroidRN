@@ -47,9 +47,6 @@ export function startFetchDataAction(dataType) {
         case actionTypes.FETCH_DATA_TYPE_SYSTEM_TREE:
             type = actionTypes.FETCH_SYSTEM_TREE_START
             break
-        case actionTypes.FETCH_DATA_TYPE_SYSTEM_TREE_ARTICLES:
-            type = actionTypes.FETCH_SYSTEM_TREE_ARTICLES_START
-            break
         default:
             type = actionTypes.FETCH_HOME_DATA_START
     }

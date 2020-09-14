@@ -4,6 +4,7 @@ import globalStyles from '../styles/globalStyles'
 import ArticleItem from '../components/ArticleItem';
 import CommonFlatList from '../components/CommonFlatList';
 import { getSystemTreeArticles } from '../api/index';
+import { getRealDP as dp } from '../utils/screenUtil';
 
 /**
  * 文章列表
@@ -23,6 +24,7 @@ class ArticleFlatList extends PureComponent {
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshList = this.refreshList.bind(this)
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
+        this.renderBlankDivider = this.renderBlankDivider.bind(this)
     }
 
     componentDidMount() {
@@ -33,6 +35,12 @@ class ArticleFlatList extends PureComponent {
         const { navigation } = this.props
         return (
             <ArticleItem navigation={navigation} item={item} />
+        )
+    }
+
+    renderBlankDivider() {
+        return (
+            <View style={{ height: dp(14) }} />
         )
     }
 
@@ -97,6 +105,8 @@ class ArticleFlatList extends PureComponent {
                 <CommonFlatList
                     data={this.state.articles}
                     renderItem={this.renderListItem}
+                    ListHeaderComponent={this.renderBlankDivider}
+                    ListFooterComponent={this.renderBlankDivider}
                     keyExtractor={(item, index) => item.id.toString()}
                     onEndReached={this.loadMoreArticles}
                     refreshing={this.state.isFetching}
