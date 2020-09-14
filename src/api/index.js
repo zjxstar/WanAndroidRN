@@ -26,3 +26,19 @@ export function getHomeTopArticles() {
 export function getHomeArticles(page = 0) {
     return get(`article/list/${page}/json`)
 }
+
+/**
+ * 获取知识体系数据
+ */
+export function getSystemTree() {
+    return get('tree/json')
+}
+
+/**
+ * 获取知识体系下的文章
+ * @param {Number} page 分页码，从0开始
+ * @param {Number} cid 二级目录id
+ */
+export function getSystemTreeArticles(cid, page = 0) {
+    return get(`article/list/${page}/json?cid=${cid}`)
+}

@@ -17,6 +17,7 @@ import LoginScreen from './screen/drawer/LoginScreen';
 import RegisterScreen from './screen/drawer/RegisterScreen';
 import SearchScreen from './screen/article/SearchScreen';
 import WebViewScreen from './screen/article/WebViewScreen';
+import ArticleTabScreen from './screen/article/ArticleTabScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getRealDP as dp } from './utils/screenUtil';
 
@@ -93,6 +94,7 @@ function RootStack() {
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
             <Stack.Screen name="WebView" component={WebViewScreen} />
+            <Stack.Screen name="ArticleTab" component={ArticleTabScreen} />
         </Stack.Navigator>
     )
 }

@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const instance = axios.create({
     baseURL: 'https://www.wanandroid.com/',
-    timeout: 5000,
+    timeout: 10000,
 })
 
 // 设置请求时的拦截器，补充Cookie
