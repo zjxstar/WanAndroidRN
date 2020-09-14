@@ -15,7 +15,9 @@ class SystemCard extends PureComponent {
 
     toSystemDetail(classification) {
         const { navigation } = this.props
-        console.log(classification.name)
+        navigation.navigate('ArticleTab', {
+            classification
+        })
     }
 
     render() {

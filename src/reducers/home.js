@@ -1,6 +1,7 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    isFetching: false,
     homeBanner: [], // 首页banner
     topArticles: [], // 置顶文章列表
     page: 0, // 分页页码从0开始
@@ -11,6 +12,11 @@ const initialState = {
 
 const home = (state = initialState, action) => {
     switch(action.type) {
+        case actionTypes.FETCH_HOME_DATA_START:
+            return {
+                ...state,
+                isFetching: true,
+            }
         case actionTypes.FETCH_HOME_BANNER:
             return {
                 ...state,
@@ -24,6 +30,7 @@ const home = (state = initialState, action) => {
         case actionTypes.FETCH_HOME_ARTICLES:
             return {
                 ...state,
+                isFetching: false,
                 page: 1,
                 articlesObj: action.articlesObj,
                 articles: action.articlesObj.datas,
@@ -37,7 +44,10 @@ const home = (state = initialState, action) => {
                 isFullData: action.articlesObj.datas.length === 0
             }
         case actionTypes.FETCH_HOME_ARTICLES_FAILURE:
-            return state
+            return {
+                ...state,
+                isFetching: false,
+            }
         default:
             return state
     }

@@ -20,9 +20,6 @@ class HomeScreen extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            isRefreshing: false
-        }
         this.renderListHeader = this.renderListHeader.bind(this)
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshPage = this.refreshPage.bind(this)
@@ -53,25 +50,23 @@ class HomeScreen extends Component {
     }
 
     async refreshPage() {
-        this.setState({
-            isRefreshing: true
-        })
+        console.log('refreh home page')
 
         await Promise.all([this.props.reqHomeBanner(), this.props.reqTopArticles(), this.props.reqArticles()])
-        
-        this.setState({
-            isRefreshing: false
-        })
     }
 
     loadMoreArticles() {
-        let { page } = this.props
-        console.log('load more page: ', page)
+        let { page, isFullData } = this.props
+        if (isFullData) {
+            return
+        }
+        console.log('load home more page: ', page)
         this.props.reqArticlesMore(page)
     }
 
     render() {
-        const { navigation, topArticles, articles } = this.props
+        const { isFetching, navigation, homeBanner, topArticles, articles } = this.props
+        console.log('home b : ', homeBanner.length,' t: ', topArticles.length, ' a: ', articles.length)
         let allArticles = topArticles.concat(articles)
         return (
             <View style={globalStyles.container}>
@@ -84,7 +79,7 @@ class HomeScreen extends Component {
                     keyExtractor={(item, index) => item.id.toString()}
                     ListHeaderComponent={this.renderListHeader}
                     onEndReached={() => {this.loadMoreArticles()}}
-                    refreshing={this.state.isRefreshing}
+                    refreshing={isFetching}
                     onRefresh={this.refreshPage} />
             </View>
         )
@@ -93,6 +88,7 @@ class HomeScreen extends Component {
 
 const mapStateToProps = state => {
     return {
+        isFetching: state.home.isFetching,
         homeBanner: state.home.homeBanner,
         topArticles: state.home.topArticles,
         page: state.home.page,

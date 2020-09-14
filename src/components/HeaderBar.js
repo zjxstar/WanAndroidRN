@@ -56,10 +56,17 @@ class HeaderBar extends PureComponent {
         const { navigation, title } = this.props
         return (
             <Header
+                containerStyle={
+                    {
+                        // 把分割线的颜色设为主题色
+                        borderBottomColor: Color.THEME
+                    }
+                }
                 backgroundColor={Color.THEME}
                 leftComponent={this.renderHeaderAvatar()}
                 centerComponent={{ text: title, style: { color: Color.WHITE, fontSize: dp(30) } }}
-                rightComponent={{ icon: 'search', color: Color.WHITE, size: dp(40), onPress: () => navigation.navigate('Search') }} />
+                rightComponent={{ icon: 'search', color: Color.WHITE, size: dp(40), onPress: () => navigation.navigate('Search') }} 
+                />
         )
     }
 }

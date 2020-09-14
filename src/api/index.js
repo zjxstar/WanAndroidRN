@@ -39,6 +39,6 @@ export function getSystemTree() {
  * @param {Number} page 分页码，从0开始
  * @param {Number} cid 二级目录id
  */
-export function getSystemTreeArticles(page = 0, cid) {
+export function getSystemTreeArticles(cid, page = 0) {
     return get(`article/list/${page}/json?cid=${cid}`)
 }

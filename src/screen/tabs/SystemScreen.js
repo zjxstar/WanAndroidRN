@@ -38,11 +38,13 @@ class SystemScreen extends PureComponent {
     }
 
     refreshSystemTree() {
+        console.log('refresh sys tree')
         this.props.reqSystemTree()
     }
 
     render() {
-        const { systemTree, navigation } = this.props
+        const { isFetching, systemTree, navigation } = this.props
+        console.log(' isloading : ', isFetching)
         return (
             <View style={globalStyles.container}>
                 <HeaderBar title='知识体系' navigation={navigation} />
@@ -52,7 +54,7 @@ class SystemScreen extends PureComponent {
                     renderItem={this.renderListItem}
                     keyExtractor={(item, index) => item.id.toString()}
                     ListFooterComponent={this.renderFooter}
-                    refreshing={this.props.isFetching}
+                    refreshing={isFetching}
                     onRefresh={this.refreshSystemTree} />
             </View>
         )

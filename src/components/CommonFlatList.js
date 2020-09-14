@@ -46,6 +46,7 @@ class CommonFlatList extends PureComponent {
                     ref={comp => {
                         this.flatListRef = comp;
                     }}
+                    onEndReachedThreshold={0.1}
                     onScroll={this._onScroll}
                     {...this.props} 
                 />

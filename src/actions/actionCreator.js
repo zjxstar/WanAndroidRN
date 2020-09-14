@@ -38,10 +38,23 @@ export function getHomeArticlesFailureAction() {
     }
 }
 
-export function startFetchSystemTreeAction(isFetching) {
+export function startFetchDataAction(dataType) {
+    let type
+    switch(dataType) {
+        case actionTypes.FETCH_DATA_TYPE_HOME:
+            type = actionTypes.FETCH_HOME_DATA_START
+            break
+        case actionTypes.FETCH_DATA_TYPE_SYSTEM_TREE:
+            type = actionTypes.FETCH_SYSTEM_TREE_START
+            break
+        case actionTypes.FETCH_DATA_TYPE_SYSTEM_TREE_ARTICLES:
+            type = actionTypes.FETCH_SYSTEM_TREE_ARTICLES_START
+            break
+        default:
+            type = actionTypes.FETCH_HOME_DATA_START
+    }
     return {
-        type: actionTypes.FETCH_SYSTEM_TREE_START,
-        isFetching
+        type: type,
     }
 }
 
@@ -53,26 +66,6 @@ export function getSystemTreeAction(systemTree) {
 }
 
 export function getSystemTreeFailureAction() {
-    return {
-        type: actionTypes.FETCH_SYSTEM_TREE_FAILURE,
-    }
-}
-
-export function getSystemTreeArticlesAction(articlesObj) {
-    return {
-        type: actionTypes.FETCH_STSTEM_TREE_ARTICLES,
-        articlesObj
-    }
-}
-
-export function getSystemTreeArticlesMoreAction(articlesObj) {
-    return {
-        type: actionTypes.FETCH_STSTEM_TREE_ARTICLES_MORE,
-        articlesObj
-    }
-}
-
-export function getSystemTreeArticlesFailureAction() {
     return {
         type: actionTypes.FETCH_SYSTEM_TREE_FAILURE,
     }
