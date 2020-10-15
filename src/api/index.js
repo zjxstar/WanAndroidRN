@@ -65,3 +65,19 @@ export function getWXArticles(id, page = 1) {
 export function getNavigationData() {
     return get('navi/json')
 }
+
+/**
+ * 获取项目分类
+ */
+export function getProjectTabs() {
+    return get('project/tree/json')
+}
+
+/**
+ * 获取某个项目分类的项目文章列表
+ * @param {Number} cid 项目分类id
+ * @param {Number} page 页码，从1开始
+ */
+export function getProjects(cid, page = 1) {
+    return get(`project/list/${page}/json?cid=${cid}`)
+}
