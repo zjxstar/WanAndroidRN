@@ -58,3 +58,10 @@ export function getWXTabs() {
 export function getWXArticles(id, page = 1) {
     return get(`wxarticle/list/${id}/${page}/json`)
 }
+
+/**
+ * 获取导航页面数据
+ */
+export function getNavigationData() {
+    return get('navi/json')
+}
