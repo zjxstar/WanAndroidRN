@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Image } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Color from '../styles/color';
-import Tag from './Tag';
 import { getRealDP as dp } from '../utils/screenUtil';
 
 /**

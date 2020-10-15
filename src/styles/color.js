@@ -14,7 +14,8 @@ const Color = {
     WX_GREEN: '#3CB371',
     ICON_GRAY: '#E0E0E0',
     GUIDE_BG: '#F8F8F8',
-    ICON_DEFAULT: '#696969'
+    ICON_DEFAULT: '#696969',
+    AVATAR_BACKGROUND: '#BCBEC1',
 };
 
 export default Color;
