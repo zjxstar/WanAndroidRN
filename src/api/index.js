@@ -124,3 +124,14 @@ export function logout() {
 export function getMyCoin() {
     return get('lg/coin/userinfo/json')
 }
+
+/**
+ * 根据关键词搜索文章列表
+ * @param {String} key 搜索关键词，过个关键字用空格隔开
+ * @param {Number} page 分页页码，从0开始
+ */
+export function searchArticles(key, page = 0) {
+    return post(`article/query/${page}/json`, {
+        k: key
+    })
+}

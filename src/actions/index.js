@@ -13,6 +13,9 @@ import {
     registerFailureAction,
     logoutAction,
     getUserCoinAction,
+    getSearchArticlesAction,
+    getSearchArticlesMoreAction,
+    getSearchArticlesFailureAction,
 } from './actionCreator';
 import { 
     getHomeBanner, 
@@ -23,6 +26,7 @@ import {
     register,
     logout,
     getMyCoin,
+    searchArticles,
 } from '../api';
 import actionTypes from '../actions/actionTypes';
 import AuthUtil from '../utils/authUtil';
@@ -173,6 +177,41 @@ export function fetchMyCoin() {
             dispatch(getUserCoinAction(res.data))
         }).catch(err => {
             console.log('fetch my coin err: ', err)
+        })
+    }
+}
+
+/**
+ * 按照关键词搜索文章
+ * @param {String} key 搜索关键词 
+ */
+export function fetchSearchArticles(key) {
+    return dispatch => {
+        dispatch(startFetchDataAction(actionTypes.FETCH_SEARCH_DATA_START))
+        return searchArticles(key).then(res => {
+            console.log('search a: ', res.data)
+            dispatch(getSearchArticlesAction(res.data))
+        }).catch(err => {
+            console.log('search a err: ', err)
+            dispatch(getSearchArticlesFailureAction())
+        })
+    }
+}
+
+/**
+ * 按照关键词搜索文章
+ * @param {String} key 搜索关键词
+ * @param {Number} page 页码，从0开始
+ */
+export function fetchSearchArticlesMore(key, page) {
+    return dispatch => {
+        dispatch(startFetchDataAction(actionTypes.FETCH_SEARCH_DATA_START))
+        return searchArticles(key, page).then(res => {
+            console.log('search a more: ', res.data)
+            dispatch(getSearchArticlesMoreAction(res.data))
+        }).catch(err => {
+            console.log('search a more err: ', err)
+            dispatch(getSearchArticlesFailureAction())
         })
     }
 }

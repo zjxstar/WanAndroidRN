@@ -50,6 +50,9 @@ export function startFetchDataAction(dataType) {
         case actionTypes.FETCH_DATA_TYPE_USER:
             type = actionTypes.LOADING_LOGIN_REGISTER
             break
+        case actionTypes.FETCH_DATA_TYPE_SEARCH:
+            type = actionTypes.FETCH_SEARCH_DATA_START
+            break
         default:
             type = actionTypes.FETCH_HOME_DATA_START
     }
@@ -114,5 +117,25 @@ export function getUserCoinAction(coinInfo) {
     return {
         type: actionTypes.FETCH_USER_COIN,
         coinInfo,
+    }
+}
+
+export function getSearchArticlesAction(articlesObj) {
+    return {
+        type: actionTypes.FETCH_SEARCH_ARTICLES,
+        articlesObj,
+    }
+}
+
+export function getSearchArticlesMoreAction(articlesObj) {
+    return {
+        type: actionTypes.FETCH_SEARCH_ARTICLES_MORE,
+        articlesObj,
+    }
+}
+
+export function getSearchArticlesFailureAction() {
+    return {
+        type: actionTypes.getSearchArticlesFailureAction
     }
 }

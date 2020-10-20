@@ -4,6 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Color from '../styles/color';
 import Tag from './Tag';
 import { getRealDP as dp } from '../utils/screenUtil';
+import { filterHtmlFromStr } from '../utils/commonUtil';
+
 
 /**
  * 文章列表Item
@@ -40,7 +42,7 @@ class ArticleItem extends PureComponent {
                         <Text style={{ fontSize: dp(26), color: Color.TEXT_DARK}}>{item.niceDate}</Text>
                     </View>
                     <View style={styles.lineTwo}>
-                        <Text style={{fontSize: dp(32), color: Color.TEXT_MAIN}} numberOfLines={1}>{item.title}</Text>
+                        <Text style={{fontSize: dp(32), color: Color.TEXT_MAIN}} numberOfLines={1}>{filterHtmlFromStr(item.title)}</Text>
                     </View>
                     <View style={styles.lineThree}>
                         <Text style={{fontSize: dp(20), color: Color.TEXT_LIGHT}}>{item.superChapterName} / {item.chapterName}</Text>
