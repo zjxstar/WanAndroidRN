@@ -4,6 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import DrawerStack from './src';
 import { Provider } from 'react-redux'
 import store from './src/store';
+import AuthUtil from './src/utils/authUtil';
+import { initLoginUserInfoAction, getUserCoinAction} from './src/actions/actionCreator';
+import { getMyCoin} from './src/api';
 
 /** 解决Text在miui系统上出现截断问题 */
 const defaultFontFamily = {
@@ -22,7 +25,33 @@ Text.render = function (...args) {
 
 export default class App extends Component {
 
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+    this.initInfo = this.initInfo.bind(this)
+  }
+
+  async UNSAFE_componentWillMount() {
+    console.log('app componentWillMount')
+    await this.initInfo()
+    const userInfo = await AuthUtil.getUserInfo()
+    if (!!userInfo) {
+      getMyCoin().then(res => {
+        console.log('fetch my coin: ', res.data)
+        store.dispatch(getUserCoinAction(res.data))
+      }).catch(err => {
+        console.log('fetch my coin err: ', err)
+      })
+    }
+  }
+
+  async initInfo() {
+    const userInfo = await AuthUtil.getUserInfo()
+    const authInfo = {
+      isLogin: !!userInfo,
+      userInfo
+    }
+    console.log('authInfo: ', authInfo)
+    store.dispatch(initLoginUserInfoAction(authInfo))
   }
 
   render() {

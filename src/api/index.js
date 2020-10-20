@@ -3,6 +3,8 @@
  */
 
 import {get} from '../service/httpHelper'
+import {post} from '../service/httpHelper'
+import {post2} from '../service/httpHelper'
 
 /**
  * 获取首页Banner列表
@@ -80,4 +82,45 @@ export function getProjectTabs() {
  */
 export function getProjects(cid, page = 1) {
     return get(`project/list/${page}/json?cid=${cid}`)
+}
+
+/**
+ * 用户登录
+ * @param {String} username 用户名
+ * @param {String} password 密码
+ */
+export function login(username, password) {
+    console.log('login u: ', username, ' p: ', password)
+    return post('user/login', {
+        username: username,
+        password: password
+    })
+}
+
+/**
+ * 用户注册
+ * @param {String} username 用户名
+ * @param {String} password 密码
+ * @param {String} repassword 二次确认密码
+ */
+export function register(username, password, repassword) {
+    return post('user/register', {
+        username,
+        password,
+        repassword
+    })
+}
+
+/**
+ * 退出登录
+ */
+export function logout() {
+    return get('user/logout/json')
+}
+
+/**
+ * 获取个人积分
+ */
+export function getMyCoin() {
+    return get('lg/coin/userinfo/json')
 }

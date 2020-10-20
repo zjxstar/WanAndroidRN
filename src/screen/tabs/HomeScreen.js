@@ -50,8 +50,6 @@ class HomeScreen extends Component {
     }
 
     async refreshPage() {
-        console.log('refreh home page')
-
         await Promise.all([this.props.reqHomeBanner(), this.props.reqTopArticles(), this.props.reqArticles()])
     }
 
@@ -60,13 +58,11 @@ class HomeScreen extends Component {
         if (isFullData) {
             return
         }
-        console.log('load home more page: ', page)
         this.props.reqArticlesMore(page)
     }
 
     render() {
         const { isFetching, navigation, homeBanner, topArticles, articles } = this.props
-        console.log('home b : ', homeBanner.length,' t: ', topArticles.length, ' a: ', articles.length)
         let allArticles = topArticles.concat(articles)
         return (
             <View style={globalStyles.container}>

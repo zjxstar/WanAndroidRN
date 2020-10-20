@@ -7,14 +7,25 @@ import {
     getSystemTreeAction,
     startFetchDataAction,
     getSystemTreeFailureAction,
+    loginAction,
+    loginFailureAction,
+    registerAction,
+    registerFailureAction,
+    logoutAction,
+    getUserCoinAction,
 } from './actionCreator';
 import { 
     getHomeBanner, 
     getHomeTopArticles,
     getHomeArticles,
     getSystemTree,
+    login,
+    register,
+    logout,
+    getMyCoin,
 } from '../api';
 import actionTypes from '../actions/actionTypes';
+import AuthUtil from '../utils/authUtil';
 
 /**
  * 拉取首页Banner图
@@ -95,3 +106,73 @@ export function fetchSystemTree() {
     }
 }
 
+/**
+ * 用户登录
+ * @param {String} username 用户名
+ * @param {String} password 密码
+ */
+export function toLogin(username, password, navigation) {
+    console.log('tologin')
+    return dispatch => {
+        dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_USER))
+        return login(username, password).then(res => {
+            console.log('to login su: ', res.data)
+            AuthUtil.saveUserInfo(res.data)
+            navigation.goBack()
+            dispatch(loginAction(res.data))
+        }).catch(err => {
+            console.log('to login err: ', err)
+            dispatch(loginFailureAction())
+        })
+    }
+}
+
+/**
+ * 用户注册
+ * @param {String} username 用户名
+ * @param {String} password 密码
+ * @param {String} repassword 二次确认密码
+ */
+export function toRegister(username, password, repassword, navigation) {
+    return dispatch => {
+        dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_USER))
+        return register(username, password, repassword).then(res => {
+            console.log('to register su: ', res.data)
+            AuthUtil.saveUserInfo(res.data)
+            navigation.popToTop()
+            dispatch(registerAction(res.data))
+        }).catch(err => {
+            console.log('to register err: ', err)
+            dispatch(registerFailureAction())
+        })
+    }
+}
+
+/**
+ * 退出登录
+ */
+export function toLogout() {
+    return dispatch => {
+        dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_USER))
+        return logout().then(res => {
+            console.log('to logout su: ', res)
+            dispatch(logoutAction())
+        }).catch(err => {
+            console.log('to logout err: ', err)
+        })
+    }
+}
+
+/**
+ * 获取个人积分信息
+ */
+export function fetchMyCoin() {
+    return dispatch => {
+        return getMyCoin().then(res => {
+            console.log('fetch my coin: ', res.data)
+            dispatch(getUserCoinAction(res.data))
+        }).catch(err => {
+            console.log('fetch my coin err: ', err)
+        })
+    }
+}
