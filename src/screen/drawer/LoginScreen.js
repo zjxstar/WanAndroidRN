@@ -52,7 +52,7 @@ class LoginScreen extends PureComponent {
 
         return (
             <View style={StyleSheet.flatten([globalStyles.container, {backgroundColor: Color.WHITE}])}>
-                <HeaderBar title='登录' navigation={navigation} />
+                <HeaderBar title='登录' navigation={navigation} type='back' />
                 <View style={styles.imgArea}>
                     <Image
                         source={require('../../images/ic_launcher.png')}

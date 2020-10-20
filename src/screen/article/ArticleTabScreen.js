@@ -21,7 +21,7 @@ class ArticleTabScreen extends PureComponent {
         const { classification } = this.props.route.params
         return (
             <View style={globalStyles.container}>
-                <HeaderBar title={classification.name} navigation={navigation} />
+                <HeaderBar title={classification.name} navigation={navigation} type='back' />
                 <ArticleTabComponent data={classification} />
             </View>
       )

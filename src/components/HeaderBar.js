@@ -4,6 +4,7 @@ import { Header, Avatar, } from 'react-native-elements';
 import Color from '../styles/color';
 import PropTypes from 'prop-types';
 import { getRealDP as dp } from '../utils/screenUtil';
+import { connect } from 'react-redux';
 
 /**
  * 顶部导航栏
@@ -12,12 +13,12 @@ import { getRealDP as dp } from '../utils/screenUtil';
 const propTypes = {
     title: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired,
-    isLogin: PropTypes.bool
+    type: PropTypes.string,
 }
 
 const defaultProps = {
     title: '玩Android',
-    isLogin: false,
+    type: 'avatar',
 }
 
 class HeaderBar extends PureComponent {
@@ -28,17 +29,16 @@ class HeaderBar extends PureComponent {
     }
 
     renderHeaderAvatar() {
-        const { navigation, isLogin } = this.props
+        const { navigation, isLogin, userInfo } = this.props
         if (isLogin) {
             return (
                 <Avatar
                     rounded
-                    source={{
-                        uri: 'https://wx.qlogo.cn/mmopen/vi_32/eudayfvoav2bibTSsiaxWyLW6gMqTF32RPT6hULQ9Z6wrtjU97SkVOLOdlYujdKDFic34wuib9dwIcBQbUkRtJI2MA/132'
-                    }}
+                    title={userInfo.username.substring(0, 1)}
                     onPress={() => navigation.toggleDrawer()}
                     size={dp(40)}
-                    activeOpacity={0.7} />
+                    activeOpacity={0.7}
+                    containerStyle={{ backgroundColor: Color.AVATAR_BACKGROUND}} />
             )
         } else {
             return (
@@ -53,7 +53,22 @@ class HeaderBar extends PureComponent {
     }
 
     render() {
-        const { navigation, title } = this.props
+        const { navigation, title, type } = this.props
+        if (type === 'back') {
+            return (
+                <Header
+                    containerStyle={
+                        {
+                            // 把分割线的颜色设为主题色
+                            borderBottomColor: Color.THEME
+                        }
+                    }
+                    backgroundColor={Color.THEME}
+                    leftComponent={{ icon: 'chevron-left', color: Color.WHITE, size: dp(40), onPress: () => navigation.goBack() }}
+                    centerComponent={{ text: title, style: { color: Color.WHITE, fontSize: dp(30) } }}
+                />
+            )
+        }
         return (
             <Header
                 containerStyle={
@@ -74,4 +89,11 @@ class HeaderBar extends PureComponent {
 HeaderBar.propTypes = propTypes
 HeaderBar.defaultProps = defaultProps
 
-export default HeaderBar
+const mapStateToProps = state => {
+    return {
+        isLogin: state.user.isLogin,
+        userInfo: state.user.userInfo,
+    }
+}
+
+export default connect(mapStateToProps)(HeaderBar)

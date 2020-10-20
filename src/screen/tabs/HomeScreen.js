@@ -62,12 +62,12 @@ class HomeScreen extends Component {
     }
 
     render() {
-        const { isFetching, navigation, homeBanner, topArticles, articles } = this.props
+        const { isFetching, navigation, isLogin, topArticles, articles, userInfo } = this.props
         let allArticles = topArticles.concat(articles)
         return (
             <View style={globalStyles.container}>
                 
-                <HeaderBar title='首页' navigation={navigation} isLogin={false} />
+                <HeaderBar title='首页' navigation={navigation} />
 
                 <CommonFlatList 
                     data={allArticles} 
@@ -90,7 +90,8 @@ const mapStateToProps = state => {
         page: state.home.page,
         articlesObj: state.home.articlesObj,
         articles: state.home.articles,
-        isFullData: state.home.isFullData
+        isFullData: state.home.isFullData,
+        isLogin: state.user.isLogin,
     }
 }
 

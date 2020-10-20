@@ -33,7 +33,7 @@ export default class AboutScreen extends Component {
         const { navigation } = this.props
         return (
             <View style={globalStyles.container}>
-                <HeaderBar title='关于' navigation={navigation} />
+                <HeaderBar title='关于' navigation={navigation} type='back'/>
                 <View style={styles.header}>
                     <Image
                         source={require('../../images/ic_launcher.png') }
