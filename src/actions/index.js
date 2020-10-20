@@ -187,7 +187,7 @@ export function fetchMyCoin() {
  */
 export function fetchSearchArticles(key) {
     return dispatch => {
-        dispatch(startFetchDataAction(actionTypes.FETCH_SEARCH_DATA_START))
+        dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_SEARCH))
         return searchArticles(key).then(res => {
             console.log('search a: ', res.data)
             dispatch(getSearchArticlesAction(res.data))

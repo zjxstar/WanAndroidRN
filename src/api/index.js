@@ -135,3 +135,10 @@ export function searchArticles(key, page = 0) {
         k: key
     })
 }
+
+/**
+ * 获取搜索热词
+ */
+export function getHotKeys() {
+    return get('hotkey/json')
+}

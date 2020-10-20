@@ -5,7 +5,7 @@ const initialState = {
     page: 0, // 分页页码从0开始
     articlesObj: {}, // 服务端返回的是对象
     articles: [], // 真正的文章列表，在articles的datas字段
-    isFullData: false // 是否已经加载完全部数据，没有加载更多了
+    isFullData: false, // 是否已经加载完全部数据，没有加载更多了
 }
 
 const search = (state = initialState, action) => {
@@ -35,6 +35,13 @@ const search = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
+            }
+        case actionTypes.CLEAR_SEARCH_ARTICLES:
+            return {
+                ...state,
+                page: 0,
+                articles: [],
+                isFullData: false,
             }
         default:
             return state

@@ -136,6 +136,12 @@ export function getSearchArticlesMoreAction(articlesObj) {
 
 export function getSearchArticlesFailureAction() {
     return {
-        type: actionTypes.getSearchArticlesFailureAction
+        type: actionTypes.FETCH_SEARCH_ARTICLES_FAILURE
+    }
+}
+
+export function clearSearchArticlesAction() {
+    return {
+        type: actionTypes.CLEAR_SEARCH_ARTICLES
     }
 }
