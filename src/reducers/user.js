@@ -9,7 +9,6 @@ const initState = {
 const user = (state = initState, action) => {
     switch(action.type) {
         case actionTypes.LOADING_LOGIN_REGISTER:
-            console.log('user isLoading')
             return {
                 ...state,
                 isLoading: true,
@@ -26,6 +25,7 @@ const user = (state = initState, action) => {
                 ...state,
                 isLoading: false,
                 isLogin: false,
+                userInfo: {}
             }
         case actionTypes.REGISTER_SUCCESS:
             return {
@@ -39,12 +39,14 @@ const user = (state = initState, action) => {
                 ...state,
                 isLoading: false,
                 isLogin: false,
+                userInfo: {}
             }
         case actionTypes.LOGOUT_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                isLogin: false
+                isLogin: false,
+                userInfo: {},
             }
         case actionTypes.INIT_LOGIN_USERINFO:
             return {

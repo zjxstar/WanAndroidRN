@@ -53,6 +53,9 @@ export function startFetchDataAction(dataType) {
         case actionTypes.FETCH_DATA_TYPE_SEARCH:
             type = actionTypes.FETCH_SEARCH_DATA_START
             break
+        case actionTypes.FETCH_DATA_TYPE_COLLECT:
+            type = actionTypes.FETCH_COLLECT_DATA_START
+            break
         default:
             type = actionTypes.FETCH_HOME_DATA_START
     }
@@ -143,5 +146,31 @@ export function getSearchArticlesFailureAction() {
 export function clearSearchArticlesAction() {
     return {
         type: actionTypes.CLEAR_SEARCH_ARTICLES
+    }
+}
+
+export function getCollectArticlesAction(articlesObj) {
+    return {
+        type: actionTypes.FETCH_COLLECT_ARTICLES,
+        articlesObj,
+    }
+}
+
+export function getCollectArticlesMoreAction(articlesObj) {
+    return {
+        type: actionTypes.FETCH_COLLECT_ARTICLES_MORE,
+        articlesObj,
+    }
+}
+
+export function getCollectArticlesFailureAction() {
+    return {
+        type: actionTypes.FETCH_COLLECT_ARTICLES_FAILURE
+    }
+}
+
+export function forceRefreshAction() {
+    return {
+        type: actionTypes.NOTIFY_PAGE_FORCE_REFRESH
     }
 }

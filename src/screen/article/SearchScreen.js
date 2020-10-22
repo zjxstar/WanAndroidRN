@@ -25,6 +25,7 @@ class SearchScreen extends Component {
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
         this.renderFooter = this.renderFooter.bind(this)
         this.searchHotKey = this.searchHotKey.bind(this)
+        this.refreshPage = this.refreshPage.bind(this)
     }
 
     state = {

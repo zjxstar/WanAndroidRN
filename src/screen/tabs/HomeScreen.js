@@ -9,6 +9,7 @@ import CommonFlatList from '../../components/CommonFlatList';
 import { getRealDP as dp } from '../../utils/screenUtil';
 import HeaderBar from '../../components/HeaderBar';
 
+let lastIsLogin = false
 
 /**
  * 首页
@@ -20,14 +21,40 @@ class HomeScreen extends Component {
 
     constructor(props) {
         super(props)
+
+        this.state = {
+            forceRefresh: false
+        }
+
         this.renderListHeader = this.renderListHeader.bind(this)
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshPage = this.refreshPage.bind(this)
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
     }
 
+    UNSAFE_componentWillMount() {
+        lastIsLogin = this.props.isLogin
+        let that = this
+        this.props.navigation.addListener('focus', () => {
+            const { isLogin } = that.props
+            console.log('home on resume curlogin: ', isLogin, ' lastlogin: ', lastIsLogin)
+            if (isLogin != lastIsLogin) {
+                console.log('force refresh')
+                that.refreshPage()
+            }
+        })
+    }
+
     async componentDidMount() {
+        
         await this.refreshPage()
+        // this.props.navigation.addListener('blur', () => {
+        //     const { isLogin } = this.props
+        //     console.log('home on resume curlogin: ', isLogin, ' lastlogin: ', lastIsLogin)
+        //     if (isLogin != lastIsLogin) {
+        //         // this.refreshPage()
+        //     }
+        // })
     }
 
     renderListHeader() {
@@ -62,7 +89,7 @@ class HomeScreen extends Component {
     }
 
     render() {
-        const { isFetching, navigation, isLogin, topArticles, articles, userInfo } = this.props
+        const { isFetching, navigation, isLogin, topArticles, articles } = this.props
         let allArticles = topArticles.concat(articles)
         return (
             <View style={globalStyles.container}>

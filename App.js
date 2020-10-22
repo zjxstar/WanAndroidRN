@@ -31,7 +31,6 @@ export default class App extends Component {
   }
 
   async UNSAFE_componentWillMount() {
-    console.log('app componentWillMount')
     await this.initInfo()
     const userInfo = await AuthUtil.getUserInfo()
     if (!!userInfo) {

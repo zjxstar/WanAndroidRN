@@ -48,7 +48,6 @@ class LoginScreen extends PureComponent {
 
     render() {
         const { navigation, isLoading } = this.props
-        console.log('isLoading: ', isLoading)
 
         return (
             <View style={StyleSheet.flatten([globalStyles.container, {backgroundColor: Color.WHITE}])}>

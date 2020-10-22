@@ -16,6 +16,9 @@ import {
     getSearchArticlesAction,
     getSearchArticlesMoreAction,
     getSearchArticlesFailureAction,
+    getCollectArticlesAction,
+    getCollectArticlesMoreAction,
+    getCollectArticlesFailureAction,
 } from './actionCreator';
 import { 
     getHomeBanner, 
@@ -27,6 +30,7 @@ import {
     logout,
     getMyCoin,
     searchArticles,
+    getCollectArticles,
 } from '../api';
 import actionTypes from '../actions/actionTypes';
 import AuthUtil from '../utils/authUtil';
@@ -53,6 +57,7 @@ export function fetchHomeTopArticles() {
     return dispatch => {
         return getHomeTopArticles().then(
             res => {
+               
                 dispatch(getHomeTopArticlesAction(res.data))}
         ).catch(
             err => console.log('home top article err: ', err)
@@ -70,7 +75,6 @@ export function fetchHomeArticles() {
                 dispatch(getHomeArticlesAction(res.data))}
         ).catch(
             err => {
-                console.log('fetch home articles err: ', err)
                 dispatch(getHomeArticlesFailureAction())}
         )
     }
@@ -86,7 +90,6 @@ export function fetchHomeArticlesMore(page) {
             res => dispatch(getHomeArticlesMoreAction(res.data))
         ).catch(
             err => {
-                console.log('fetch home articles more err: ', err)
                 dispatch(getHomeArticlesFailureAction())}
         )
     }
@@ -104,7 +107,6 @@ export function fetchSystemTree() {
                 dispatch(getSystemTreeAction(res.data))}
         ).catch(
             err => {
-                console.log('fetch system tree err: ', err)
                 dispatch(getSystemTreeFailureAction())}
         )
     }
@@ -116,16 +118,13 @@ export function fetchSystemTree() {
  * @param {String} password 密码
  */
 export function toLogin(username, password, navigation) {
-    console.log('tologin')
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_USER))
         return login(username, password).then(res => {
-            console.log('to login su: ', res.data)
             AuthUtil.saveUserInfo(res.data)
-            navigation.goBack()
             dispatch(loginAction(res.data))
+            navigation.goBack()
         }).catch(err => {
-            console.log('to login err: ', err)
             dispatch(loginFailureAction())
         })
     }
@@ -141,12 +140,10 @@ export function toRegister(username, password, repassword, navigation) {
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_USER))
         return register(username, password, repassword).then(res => {
-            console.log('to register su: ', res.data)
             AuthUtil.saveUserInfo(res.data)
-            navigation.popToTop()
             dispatch(registerAction(res.data))
+            navigation.popToTop()
         }).catch(err => {
-            console.log('to register err: ', err)
             dispatch(registerFailureAction())
         })
     }
@@ -159,7 +156,6 @@ export function toLogout() {
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_USER))
         return logout().then(res => {
-            console.log('to logout su: ', res)
             dispatch(logoutAction())
         }).catch(err => {
             console.log('to logout err: ', err)
@@ -173,7 +169,6 @@ export function toLogout() {
 export function fetchMyCoin() {
     return dispatch => {
         return getMyCoin().then(res => {
-            console.log('fetch my coin: ', res.data)
             dispatch(getUserCoinAction(res.data))
         }).catch(err => {
             console.log('fetch my coin err: ', err)
@@ -189,10 +184,8 @@ export function fetchSearchArticles(key) {
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_SEARCH))
         return searchArticles(key).then(res => {
-            console.log('search a: ', res.data)
             dispatch(getSearchArticlesAction(res.data))
         }).catch(err => {
-            console.log('search a err: ', err)
             dispatch(getSearchArticlesFailureAction())
         })
     }
@@ -207,11 +200,43 @@ export function fetchSearchArticlesMore(key, page) {
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_SEARCH_DATA_START))
         return searchArticles(key, page).then(res => {
-            console.log('search a more: ', res.data)
             dispatch(getSearchArticlesMoreAction(res.data))
         }).catch(err => {
-            console.log('search a more err: ', err)
             dispatch(getSearchArticlesFailureAction())
+        })
+    }
+}
+
+/**
+ * 获取个人收藏的文章列表
+ */
+export function fetchCollectArticles() {
+    return dispatch => {
+        dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_COLLECT))
+        return getCollectArticles().then(res => {
+            console.log('collect a: ', res.data)
+            dispatch(getCollectArticlesAction(res.data))
+        }).catch(err => {
+            console.log('collect a err: ', err)
+            dispatch(getCollectArticlesFailureAction())
+        })
+    }
+}
+
+/**
+ * 获取更多的个人收藏文章列表
+ * @param {String} key 搜索关键词
+ * @param {Number} page 页码，从0开始
+ */
+export function fetchCollectArticlesMore(page) {
+    return dispatch => {
+        dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_COLLECT))
+        return getCollectArticles(page).then(res => {
+            console.log('collect a more: ', res.data)
+            dispatch(getCollectArticlesMoreAction(res.data))
+        }).catch(err => {
+            console.log('collect a more err: ', err)
+            dispatch(getCollectArticlesFailureAction())
         })
     }
 }

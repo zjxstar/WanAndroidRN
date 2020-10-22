@@ -11,10 +11,13 @@ import { connect } from 'react-redux';
 import { getRealDP as dp } from '../../utils/screenUtil';
 import { fetchMyCoin, toLogout } from '../../actions';
 import AuthUtil from '../../utils/authUtil';
+import {forceRefreshAction} from '../../actions/actionCreator';
 
 /**
  * 自定义Drawer样式
  */
+
+ let lastIsLogin = false
 
 class CustomDrawerContent extends PureComponent {
 
@@ -48,26 +51,33 @@ class CustomDrawerContent extends PureComponent {
     }   
 
     reqLogout() {
-        console.log('log out')
         this.props.logout()
         AuthUtil.removeUserInfo()
         AuthUtil.removeCookie()
     }
 
     componentDidMount() {
-        console.log('drawer componentDidMount')
+        // 记录当前是否已经登录
+        lastIsLogin = this.props.isLogin
+        let that = this
+
         this.props.navigation.addListener('focus', () => {
-            const {isLogin} = this.props
+            const {isLogin} = that.props
             console.log('drawer on resume: ', isLogin)
             if (isLogin) {
-                this.props.reqMyCoin()
+                that.props.reqMyCoin()
+            }
+            if (isLogin != lastIsLogin) {
+                // 登录态发生了变化，要通知其他页面刷新数据
+                lastIsLogin = isLogin
+
             }
         })
     }
 
     render() {
         const { navigation, isLogin, userInfo, level, coinCount, rank} = this.props
-        console.log('isLogin: ', isLogin)
+        console.log('on resume login: ', isLogin)
         return (
             <View style={globalStyles.container}>
                 {isLogin && userInfo && (
@@ -148,7 +158,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         reqMyCoin: () => dispatch(fetchMyCoin()),
-        logout: () => dispatch(toLogout())
+        logout: () => dispatch(toLogout()),
+        notifyForceRefresh: () => dispatch(forceRefreshAction())
     }
 }
 

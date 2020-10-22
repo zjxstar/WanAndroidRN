@@ -30,11 +30,15 @@ class HeaderBar extends PureComponent {
 
     renderHeaderAvatar() {
         const { navigation, isLogin, userInfo } = this.props
+        console.log('header bar isLogin: ', isLogin, ' userInfo: ', userInfo)
+        
         if (isLogin) {
+            let title = userInfo.username.substring(0, 1)
+            console.log('title', title)
             return (
                 <Avatar
                     rounded
-                    title={userInfo.username.substring(0, 1)}
+                    title={title}
                     onPress={() => navigation.toggleDrawer()}
                     size={dp(40)}
                     activeOpacity={0.7}

@@ -4,7 +4,6 @@
 
 import {get} from '../service/httpHelper'
 import {post} from '../service/httpHelper'
-import {post2} from '../service/httpHelper'
 
 /**
  * 获取首页Banner列表
@@ -141,4 +140,39 @@ export function searchArticles(key, page = 0) {
  */
 export function getHotKeys() {
     return get('hotkey/json')
+}
+
+/**
+ * 获取个人收藏文章列表
+ * @param {Number} page 分页页码，从0开始
+ */
+export function getCollectArticles(page = 0) {
+    return get(`lg/collect/list/${page}/json`)
+}
+
+/**
+ * 站内文章收藏
+ * @param {Number} id 文章id
+ */
+export function favorArticleInner(id) {
+    return post(`lg/collect/${id}/json`)
+}
+
+/**
+ * 在文字列表中取消收藏
+ * @param {Number} id 文章id
+ */
+export function uncollectArticleInList(id) {
+    return post(`lg/uncollect_originId/${id}/json`)
+}
+
+/**
+ * 在我的收藏页面取消收藏
+ * @param {Number} id 我的收藏页中的文章id
+ * @param {Number} originId 我的收藏页中的原始文章id
+ */
+export function uncollectArticleInFavorPage(id, originId = -1) {
+    return post(`lg/uncollect/${id}/json`, {
+        originId
+    })
 }
