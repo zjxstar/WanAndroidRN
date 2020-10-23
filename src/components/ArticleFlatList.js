@@ -5,6 +5,7 @@ import ArticleItem from '../components/ArticleItem';
 import CommonFlatList from '../components/CommonFlatList';
 import { getSystemTreeArticles, getWXArticles } from '../api';
 import { getRealDP as dp } from '../utils/screenUtil';
+import { favorArticleInner, uncollectArticleInList } from '../api';
 
 /**
  * 文章列表
@@ -25,6 +26,7 @@ class ArticleFlatList extends PureComponent {
         this.refreshList = this.refreshList.bind(this)
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
         this.renderBlankDivider = this.renderBlankDivider.bind(this)
+        this.favorArticle = this.favorArticle.bind(this)
     }
 
     componentDidMount() {
@@ -34,8 +36,38 @@ class ArticleFlatList extends PureComponent {
     renderListItem({item, index}) {
         const { navigation } = this.props
         return (
-            <ArticleItem navigation={navigation} item={item} />
+            <ArticleItem navigation={navigation} item={item} onFavorClick={() => this.favorArticle(item, index)}/>
         )
+    }
+
+
+    favorArticle(item, index) {
+        if (item.collect) {
+            // 取消收藏
+            uncollectArticleInList(item.id).then(res => {
+                console.log('unfavor')
+                let tempArticles = [...this.state.articles]
+                tempArticles[index].collect = false
+                console.log('temp: ', tempArticles)
+                this.setState({
+                    articles: tempArticles
+                })
+            }).catch(err => {
+                console.log('uncollectArticleInList err: ', err)
+            })
+        } else {
+            // 收藏文章
+            favorArticleInner(item.id).then(res => {
+                console.log('favor')
+                let tempArticles = [...this.state.articles]
+                tempArticles[index].collect = true
+                this.setState({
+                    articles: tempArticles
+                })
+            }).catch(err => {
+                console.log('favor inner article err: ', err)
+            })
+        }
     }
 
     renderBlankDivider() {

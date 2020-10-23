@@ -48,6 +48,40 @@ const home = (state = initialState, action) => {
                 ...state,
                 isFetching: false,
             }
+        case actionTypes.UPDATE_HOME_FAVOR_ARTICLE:
+            console.log('favor action: ', action)
+            if (action.isTop) {
+                let tempTopArticles = [...state.topArticles]
+                tempTopArticles[action.index].collect = true
+                return {
+                    ...state,
+                    topArticles: tempTopArticles
+                }
+            } else {
+                let tempArticles = [...state.articles]
+                tempArticles[action.index].collect = true
+                return {
+                    ...state,
+                    articles: tempArticles
+                }
+            }
+        case actionTypes.UPDATE_HOME_UNFAVOR_ARTICLE:
+            console.log('unfavor action: ', action)
+            if (action.isTop) {
+                let tempTopArticles = [...state.topArticles]
+                tempTopArticles[action.index].collect = false
+                return {
+                    ...state,
+                    topArticles: tempTopArticles
+                }
+            } else {
+                let tempArticles = [...state.articles]
+                tempArticles[action.index].collect = false
+                return {
+                    ...state,
+                    articles: tempArticles
+                }
+            }
         default:
             return state
     }

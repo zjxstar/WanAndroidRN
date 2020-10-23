@@ -5,7 +5,6 @@ import user from './user';
 import coin from './coin';
 import search from './search';
 import collect from './collect';
-import refresh from './refresh';
 
 export default combineReducers({
     home,
@@ -14,5 +13,4 @@ export default combineReducers({
     coin,
     search,
     collect,
-    refresh,
 })

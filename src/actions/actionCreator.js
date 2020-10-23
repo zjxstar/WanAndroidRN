@@ -169,8 +169,18 @@ export function getCollectArticlesFailureAction() {
     }
 }
 
-export function forceRefreshAction() {
+export function updateHomeFavorArticleAction(isTop, index) {
     return {
-        type: actionTypes.NOTIFY_PAGE_FORCE_REFRESH
+        type: actionTypes.UPDATE_HOME_FAVOR_ARTICLE,
+        isTop,
+        index
+    }
+}
+
+export function updateHomeUnfavorArticleAction(isTop, index) {
+    return {
+        type: actionTypes.UPDATE_HOME_UNFAVOR_ARTICLE,
+        isTop,
+        index
     }
 }

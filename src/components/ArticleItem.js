@@ -1,13 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Color from '../styles/color';
 import Tag from './Tag';
 import { getRealDP as dp } from '../utils/screenUtil';
 import { filterHtmlFromStr } from '../utils/commonUtil';
-import { favorArticleInner, 
-    uncollectArticleInList, 
-    uncollectArticleInFavorPage} from '../api';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -17,22 +14,20 @@ import { connect } from 'react-redux';
 
 const propTypes = {
     inCollectPage: PropTypes.bool,
+    onFavorClick: PropTypes.func
 }
 
 const defaultProps = {
     inCollectPage: false,
+    onFavorClick: () => {}
 }
 
-class ArticleItem extends PureComponent {
+class ArticleItem extends Component {
 
     constructor(props) {
         super(props)
         this.toWebView = this.toWebView.bind(this)
-        this.favorArticle = this.favorArticle.bind(this)
-
-        this.state = {
-            realCollect: props.item.collect || props.inCollectPage
-        }
+        this.toLoginPage = this.toLoginPage.bind(this)
     }
 
     toWebView(item) {
@@ -45,52 +40,13 @@ class ArticleItem extends PureComponent {
         })
     }
 
-    favorArticle(item) {
-        let that = this
-        let { isLogin, navigation } = this.props
-        if (!isLogin) {
-            // 未登录
-            navigation.navigate('Login')
-            return
-        }
-        if (this.state.realCollect) {
-            // 取消收藏
-            if (this.props.inCollectPage) {
-                // 在我的收藏页面取消
-                uncollectArticleInFavorPage(item.id, item.originId).then(res => {
-                    console.log('uncollectArticleInFavorPage su: ', res.data)
-                    that.setState({
-                        realCollect: false,
-                    })
-                }).catch(err => {
-                    console.log('uncollectArticleInFavorPage err: ', err)
-                })
-            } else {
-                // 在列表页取消
-                uncollectArticleInList(item.id).then(res => {
-                    console.log('uncollectArticleInList su: ', res.data)
-                    that.setState({
-                        realCollect: false,
-                    })
-                }).catch(err => {
-                    console.log('uncollectArticleInList err: ', err)
-                })
-            }
-        } else {
-            favorArticleInner(item.id).then(res => {
-                console.log('favor inner article suc: ', res.data)
-                that.setState({
-                    realCollect: true,
-                })
-            }).catch(err => {
-                console.log('favor inner article err: ', err)
-            })
-        }
+    toLoginPage() {
+        const {navigation } = this.props
+        navigation.navigate('Login')
     }
 
     render() {
-        let { item, inCollectPage, isLogin } = this.props
-        console.log('item collect: ', item.collect)
+        let { inCollectPage, isLogin, item} = this.props
         return (
             <TouchableWithoutFeedback style={styles.container} onPress={() => { this.toWebView(item) }}>
                 <View style={styles.itemWrapper} >
@@ -113,9 +69,16 @@ class ArticleItem extends PureComponent {
                         {!inCollectPage &&
                             <Text style={{ fontSize: dp(20), color: Color.TEXT_LIGHT }}>{item.superChapterName} / {item.chapterName}</Text>
                         }
-                        <TouchableWithoutFeedback onPress={() => { this.favorArticle(item) }}>
-                            <Ionicons name='md-heart' size={dp(40)} color={isLogin && (this.state.realCollect || item.collect) ? Color.COLLECT : Color.ICON_GRAY} />
-                        </TouchableWithoutFeedback>
+                        {!isLogin && (
+                            <TouchableWithoutFeedback onPress={() => { this.toLoginPage() }}>
+                                <Ionicons name='md-heart' size={dp(40)} color={Color.ICON_GRAY} />
+                            </TouchableWithoutFeedback>
+                        )}
+                        {isLogin && (
+                            <TouchableWithoutFeedback onPress={this.props.onFavorClick}>
+                                <Ionicons name='md-heart' size={dp(40)} color={item.collect ? Color.COLLECT : Color.ICON_GRAY} />
+                            </TouchableWithoutFeedback>
+                        )}
                     </View>
                 </View>
             </TouchableWithoutFeedback>

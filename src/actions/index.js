@@ -214,7 +214,6 @@ export function fetchCollectArticles() {
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_COLLECT))
         return getCollectArticles().then(res => {
-            console.log('collect a: ', res.data)
             dispatch(getCollectArticlesAction(res.data))
         }).catch(err => {
             console.log('collect a err: ', err)
@@ -232,7 +231,6 @@ export function fetchCollectArticlesMore(page) {
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_COLLECT))
         return getCollectArticles(page).then(res => {
-            console.log('collect a more: ', res.data)
             dispatch(getCollectArticlesMoreAction(res.data))
         }).catch(err => {
             console.log('collect a more err: ', err)

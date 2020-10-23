@@ -33,12 +33,12 @@ class HeaderBar extends PureComponent {
         console.log('header bar isLogin: ', isLogin, ' userInfo: ', userInfo)
         
         if (isLogin) {
-            let title = userInfo.username.substring(0, 1)
-            console.log('title', title)
+            let avatarName = userInfo.username.substring(0, 1)
+            console.log('avatarName', avatarName)
             return (
                 <Avatar
                     rounded
-                    title={title}
+                    title={avatarName === '' ? '玩' : avatarName}
                     onPress={() => navigation.toggleDrawer()}
                     size={dp(40)}
                     activeOpacity={0.7}

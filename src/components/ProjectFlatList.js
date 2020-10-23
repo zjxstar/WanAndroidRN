@@ -5,6 +5,7 @@ import ProjectItem from './ProjectItem';
 import CommonFlatList from './CommonFlatList';
 import { getProjects } from '../api';
 import { getRealDP as dp } from '../utils/screenUtil';
+import { favorArticleInner, uncollectArticleInList } from '../api';
 
 /**
  * 项目列表
@@ -25,6 +26,7 @@ class ProjectFlatList extends PureComponent {
         this.refreshList = this.refreshList.bind(this)
         this.loadMoreProjects = this.loadMoreProjects.bind(this)
         this.renderBlankDivider = this.renderBlankDivider.bind(this)
+        this.favorArticle = this.favorArticle.bind(this)
     }
 
     componentDidMount() {
@@ -34,8 +36,37 @@ class ProjectFlatList extends PureComponent {
     renderListItem({item, index}) {
         const { navigation } = this.props
         return (
-            <ProjectItem navigation={navigation} item={item} />
+            <ProjectItem navigation={navigation} item={item} onFavorClick={() => this.favorArticle(item, index)} />
         )
+    }
+
+    favorArticle(item, index) {
+        if (item.collect) {
+            // 取消收藏
+            uncollectArticleInList(item.id).then(res => {
+                console.log('unfavor')
+                let tempProjects = [...this.state.projects]
+                tempProjects[index].collect = false
+                console.log('temp: ',tempProjects)
+                this.setState({
+                    projects: tempProjects
+                })
+            }).catch(err => {
+                console.log('uncollectArticleInList err: ', err)
+            })
+        } else {
+            // 收藏文章
+            favorArticleInner(item.id).then(res => {
+                console.log('favor')
+                let tempProjects = [...this.state.projects]
+                tempProjects[index].collect = true
+                this.setState({
+                    projects: tempProjects
+                })
+            }).catch(err => {
+                console.log('favor inner article err: ', err)
+            })
+        }
     }
 
     renderBlankDivider() {
@@ -47,7 +78,6 @@ class ProjectFlatList extends PureComponent {
     refreshList() {
         const { cid } = this.props
         let that = this
-        console.log('fresh project a cid: ', cid)
         this.setState({
             isFetching: true
         })
@@ -103,6 +133,7 @@ class ProjectFlatList extends PureComponent {
     }
 
     render() {
+        console.log('projects: ', this.state.projects)
         return (
             <View style={globalStyles.container}>
                 <CommonFlatList

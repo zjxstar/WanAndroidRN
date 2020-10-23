@@ -4,15 +4,27 @@ import { Image } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Color from '../styles/color';
 import { getRealDP as dp } from '../utils/screenUtil';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 /**
  * 项目列表Item
  */
+
+const propTypes = {
+    onFavorClick: PropTypes.func
+}
+
+const defaultProps = {
+    onFavorClick: () => { }
+}
+
 class ProjectItem extends PureComponent {
 
     constructor(props) {
         super(props)
         this.toWebView = this.toWebView.bind(this)
+        this.toLoginPage = this.toLoginPage.bind(this)
     }
 
     toWebView(item) {
@@ -25,8 +37,13 @@ class ProjectItem extends PureComponent {
         })
     }
 
+    toLoginPage() {
+        const { navigation } = this.props
+        navigation.navigate('Login')
+    }
+
     render() {
-        let { item } = this.props
+        let { item, isLogin } = this.props
         return (
             <TouchableWithoutFeedback style={styles.container} onPress={() => { this.toWebView(item) }}>
                 <View style={styles.itemWrapper} >
@@ -44,9 +61,16 @@ class ProjectItem extends PureComponent {
                         </View>
                         <View style={styles.lineThree}>
                             <Text style={{ fontSize: dp(20), color: Color.TEXT_LIGHT }}>{item.author || item.shareUser} / {item.niceDate}</Text>
-                            <TouchableWithoutFeedback onPress={() => { console.log('collect: ', item.id) }}>
-                                <Ionicons name='md-heart' size={dp(40)} color={item.collect ? Color.COLLECT : Color.ICON_GRAY} />
-                            </TouchableWithoutFeedback>
+                            {isLogin && (
+                                <TouchableWithoutFeedback onPress={this.props.onFavorClick }>
+                                    <Ionicons name='md-heart' size={dp(40)} color={item.collect ? Color.COLLECT : Color.ICON_GRAY} />
+                                </TouchableWithoutFeedback>
+                            )}
+                            {!isLogin && (
+                                <TouchableWithoutFeedback onPress={() => { this.toLoginPage() }}>
+                                    <Ionicons name='md-heart' size={dp(40)} color={Color.ICON_GRAY} />
+                                </TouchableWithoutFeedback>
+                            )}
                         </View>
                     </View>
                     
@@ -107,4 +131,13 @@ const styles = StyleSheet.create({
     },
 })
 
-export default ProjectItem
+ProjectItem.propTypes = propTypes
+ProjectItem.defaultProps = defaultProps
+
+const mapStateToProps = state => {
+    return {
+        isLogin: state.user.isLogin,
+    }
+}
+
+export default connect(mapStateToProps)(ProjectItem)

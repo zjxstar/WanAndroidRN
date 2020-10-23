@@ -7,6 +7,7 @@ import ArticleItem from '../../components/ArticleItem';
 import { connect } from 'react-redux';
 import { fetchCollectArticles, fetchCollectArticlesMore } from '../../actions';
 import { getRealDP as dp } from '../../utils/screenUtil'
+import { uncollectArticleInFavorPage} from '../../api';
 
 /**
  * 我的收藏
@@ -20,6 +21,7 @@ class CollectScreen extends Component {
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
         this.renderFooter = this.renderFooter.bind(this)
         this.refreshPage = this.refreshPage.bind(this)
+        this.unfavorArticle = this.unfavorArticle.bind(this)
     }
 
     UNSAFE_componentWillMount() {
@@ -28,10 +30,20 @@ class CollectScreen extends Component {
 
     renderListItem({ item, index }) {
         const { navigation } = this.props
-
+        item.collect = true
         return (
-            <ArticleItem navigation={navigation} item={item} inCollectPage />
+            <ArticleItem navigation={navigation} item={item} inCollectPage 
+                onFavorClick={() => this.unfavorArticle(item)} />
         )
+    }
+
+    unfavorArticle(item) {
+        uncollectArticleInFavorPage(item.id, item.originId).then(res => {
+            this.refreshPage()
+        }).catch(err => {
+            console.log('uncollectArticleInFavorPage err: ', err)
+        })
+        
     }
 
     refreshPage() {
