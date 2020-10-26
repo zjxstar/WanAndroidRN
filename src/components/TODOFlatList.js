@@ -28,7 +28,9 @@ class TODOFlatList extends PureComponent {
     }
 
     componentDidMount() {
-        this.refreshList()
+        this.props.navigation.addListener('focus', () => {
+            this.refreshList()
+        })
     }
 
     renderListItem({item, index}) {

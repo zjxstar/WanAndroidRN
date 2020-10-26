@@ -22,6 +22,7 @@
     "querystring": "^0.2.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-common-date-picker": "^2.3.3",
     "react-native-elements": "^2.3.1",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-htmlview": "^0.15.0",

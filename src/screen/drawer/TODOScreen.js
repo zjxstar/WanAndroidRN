@@ -28,7 +28,8 @@ export default class TODOScreen extends Component {
 
         return (
             <View style={globalStyles.container}>
-                <HeaderBar title='TODO' navigation={navigation} type='back'/>
+                <HeaderBar title='TODO' navigation={navigation} type='back'
+                    right={{ icon: 'add', color: Color.WHITE, size: dp(40), onPress: () => navigation.navigate('AddTodo') }}/>
                     <Tab.Navigator
                         lazy={true}
                         backBehavior='none'

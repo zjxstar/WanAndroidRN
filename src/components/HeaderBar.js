@@ -14,6 +14,7 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired,
     type: PropTypes.string,
+    right: PropTypes.object,
 }
 
 const defaultProps = {
@@ -57,8 +58,24 @@ class HeaderBar extends PureComponent {
     }
 
     render() {
-        const { navigation, title, type } = this.props
+        const { navigation, title, type, right } = this.props
         if (type === 'back') {
+            if (right) {
+                return (
+                    <Header
+                        containerStyle={
+                            {
+                                // 把分割线的颜色设为主题色
+                                borderBottomColor: Color.THEME
+                            }
+                        }
+                        backgroundColor={Color.THEME}
+                        leftComponent={{ icon: 'chevron-left', color: Color.WHITE, size: dp(40), onPress: () => navigation.goBack() }}
+                        centerComponent={{ text: title, style: { color: Color.WHITE, fontSize: dp(30) } }}
+                        rightComponent={right}
+                    />
+                ) 
+            }
             return (
                 <Header
                     containerStyle={

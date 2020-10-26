@@ -14,6 +14,7 @@ import CustomDrawerContent from './screen/drawer/CustomDrawerContent';
 import AboutScreen from './screen/drawer/AboutScreen';
 import CollectScreen from './screen/drawer/CollectScreen';
 import TODOScreen from './screen/drawer/TODOScreen';
+import TODODetailScreen from './screen/drawer/TODODetailScreen';
 import LoginScreen from './screen/drawer/LoginScreen';
 import RegisterScreen from './screen/drawer/RegisterScreen';
 import SearchScreen from './screen/article/SearchScreen';
@@ -21,6 +22,7 @@ import WebViewScreen from './screen/article/WebViewScreen';
 import ArticleTabScreen from './screen/article/ArticleTabScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getRealDP as dp } from './utils/screenUtil';
+import AddTodoScreen from './screen/drawer/AddTodoScreen';
 
 const Tab = createBottomTabNavigator()
 
@@ -91,6 +93,8 @@ function RootStack() {
             <Stack.Screen name="Drawer" component={DrawerStack} options={{ headerShown: false }} />
             <Stack.Screen name="COLLECT" component={CollectScreen} />
             <Stack.Screen name="TODO" component={TODOScreen} />
+            <Stack.Screen name="TODODetail" component={TODODetailScreen} />
+            <Stack.Screen name="AddTodo" component={AddTodoScreen} />
             <Stack.Screen name="About" component={AboutScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />

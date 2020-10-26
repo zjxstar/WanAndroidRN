@@ -7,13 +7,24 @@ import Tag from '../components/Tag'
 
 class TODOItem extends PureComponent {
 
+    constructor(props) {
+        super(props)
 
+        this.toDetailPage = this.toDetailPage.bind(this)
+    }
+
+    toDetailPage(item) {
+        const {navigation} = this.props
+        navigation.navigate('TODODetail', {
+            item: JSON.stringify(item)
+        })
+    }
 
     render() {
         let {item} = this.props
 
         return (
-            <TouchableWithoutFeedback style={styles.container} onPress={() => console.log('todo detail')} onLongPress={() => console.log('delete todo')}>
+            <TouchableWithoutFeedback style={styles.container} onPress={() => this.toDetailPage(item)} onLongPress={() => console.log('delete todo')}>
                 <View style={styles.itemWrapper}>
                     <View style={styles.lineOne}>
                         <View style={styles.lineContentLeft}>
