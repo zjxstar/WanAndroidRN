@@ -13,6 +13,7 @@ import ProjectScreen from './screen/tabs/ProjectScreen';
 import CustomDrawerContent from './screen/drawer/CustomDrawerContent';
 import AboutScreen from './screen/drawer/AboutScreen';
 import CollectScreen from './screen/drawer/CollectScreen';
+import TODOScreen from './screen/drawer/TODOScreen';
 import LoginScreen from './screen/drawer/LoginScreen';
 import RegisterScreen from './screen/drawer/RegisterScreen';
 import SearchScreen from './screen/article/SearchScreen';
@@ -88,7 +89,8 @@ function RootStack() {
     return (
         <Stack.Navigator headerMode='none'>
             <Stack.Screen name="Drawer" component={DrawerStack} options={{ headerShown: false }} />
-            <Stack.Screen name="Favor" component={CollectScreen} />
+            <Stack.Screen name="COLLECT" component={CollectScreen} />
+            <Stack.Screen name="TODO" component={TODOScreen} />
             <Stack.Screen name="About" component={AboutScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />

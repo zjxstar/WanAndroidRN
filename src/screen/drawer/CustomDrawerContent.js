@@ -105,11 +105,11 @@ class CustomDrawerContent extends PureComponent {
                         />
                     </View>
                 )}
-                <DrawerItem label="我的收藏" onPress={() => navigation.navigate('Favor')}
+                <DrawerItem label="我的收藏" onPress={() => navigation.navigate('COLLECT')}
                     icon={({ focused, color, size }) => {
                         return <Ionicons name={'heart'} color={Color.ICON_DEFAULT} size={size} />
                     }} />
-                <DrawerItem label="TODO" onPress={() => navigation.navigate('Favor')}
+                <DrawerItem label="TODO" onPress={() => navigation.navigate('TODO')}
                     icon={({ focused, color, size }) => {
                         return <Ionicons name={'pricetag'} color={Color.ICON_DEFAULT} size={size} />
                     }} />

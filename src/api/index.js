@@ -176,3 +176,14 @@ export function uncollectArticleInFavorPage(id, originId = -1) {
         originId
     })
 }
+
+/**
+ * 获取TODO列表
+ * @param {Number} type 类型，工作：1，学习：2，生活：3
+ * @param {Number} page 页码，从1开始
+ */
+export function getMyTODOList(type, page = 1) {
+    return post(`lg/todo/v2/list/${page}/json`, {
+        type
+    })
+}
