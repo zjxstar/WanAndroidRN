@@ -5,19 +5,62 @@ import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
 import { getRealDP as dp } from '../../utils/screenUtil';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { finishTodo, deleteTodo} from '../../api';
 
 /**
  * todo详情页
  */
 class TODODetailScreen extends PureComponent {
 
+    constructor(props) {
+        super(props)
+        
+        this.reqFinishTodo = this.reqFinishTodo.bind(this)
+    }
+
     state = {
-        item: {}
+        item: {},
+        isLoading: false,
     }
 
     UNSAFE_componentWillMount() {
         this.setState({
             item: JSON.parse(this.props.route.params.item)
+        })
+    }
+
+    reqFinishTodo(item) {
+        this.setState({
+            isLoading: true,
+        })
+        finishTodo(item.id).then(res => {
+            this.setState({
+                isLoading: false,
+                item: res.data
+            })
+        }).catch(err => {
+            console.log('finished err: ',err)
+            this.setState({
+                isLoading: false,
+            })
+        })
+    }
+
+    reqDeleteTodo(item) {
+        const {navigation} = this.props
+        this.setState({
+            isLoading: true,
+        })
+        deleteTodo(item.id).then(res => {
+            this.setState({
+                isLoading: false,
+            })
+            navigation.goBack()
+        }).catch(err => {
+            console.log('delete err: ', err)
+            this.setState({
+                isLoading: false,
+            })
         })
     }
 
@@ -65,14 +108,14 @@ class TODODetailScreen extends PureComponent {
 
                         <View style={styles.btnArea}>
                             {!finished && (
-                                <TouchableWithoutFeedback onPress={() => console.log('finish todo')}>
+                                <TouchableWithoutFeedback onPress={() => this.reqFinishTodo(item)}>
                                     <View style={styles.btn}>
                                         <Ionicons name='md-checkmark-circle' size={dp(44)} color={Color.THEME} />
                                         <Text style={styles.btnText}>完成</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
                             )}
-                            <TouchableWithoutFeedback onPress={() => console.log('delete todo')}>
+                            <TouchableWithoutFeedback onPress={() => this.reqDeleteTodo(item)}>
                                 <View style={styles.btn}>
                                     <Ionicons name='md-close-circle' size={dp(44)} color={Color.THEME} />
                                     <Text style={styles.btnText}>删除</Text>

@@ -205,3 +205,21 @@ export function addTodo(title, content, date, type = 1, priority = 2) {
         priority,
     })
 }
+
+/**
+ * 完成一个TODO
+ * @param {Number} id TODO的id
+ */
+export function finishTodo(id) {
+    return post(`lg/todo/done/${id}/json`, {
+        status: 1
+    })
+}
+
+/**
+ * 删除一个TODO
+ * @param {Number} id TODO的id
+ */
+export function deleteTodo(id) {
+    return post(`lg/todo/delete/${id}/json`)
+}
