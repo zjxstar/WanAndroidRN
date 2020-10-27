@@ -71,6 +71,7 @@ class RegisterScreen extends Component {
                             color={Color.ICON_DEFAULT}
                         />
                     }
+                        inputStyle={styles.inputStyle}
                         onChangeText={value => this.onUserNameInput(value)} />
                     <Input label="密码" placeholder="请输入密码" secureTextEntry={true} leftIcon={
                         <Icon
@@ -79,14 +80,16 @@ class RegisterScreen extends Component {
                             color={Color.ICON_DEFAULT}
                         />
                     }
+                        inputStyle={styles.inputStyle}
                         onChangeText={value => this.onPasswordInput(value)} />
-                    <Input label="确认密码" placeholder="请输入确认密码" secureTextEntry={true} leftIcon={
+                    <Input label="确认密码" placeholder="请再次确认密码" secureTextEntry={true} leftIcon={
                         <Icon
                             name='lock'
                             size={24}
                             color={Color.ICON_DEFAULT}
                         />
                     }
+                        inputStyle={styles.inputStyle}
                         onChangeText={value => this.onRePasswordInput(value)} />
                 </View>
                 <View style={styles.btnArea}>
@@ -115,6 +118,9 @@ const styles = StyleSheet.create({
     },
     inputArea: {
         marginTop: dp(60)
+    },
+    inputStyle: {
+        fontSize: dp(28)
     },
     btnArea: {
         paddingHorizontal: dp(16),

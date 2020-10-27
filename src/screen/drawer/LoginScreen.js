@@ -65,6 +65,7 @@ class LoginScreen extends PureComponent {
                             color={Color.ICON_DEFAULT}
                         />
                     }
+                        inputStyle={styles.inputStyle}
                         onChangeText={value => this.onUserNameInput(value)} />
                     <Input label="密码" placeholder="请输入密码" secureTextEntry={true} leftIcon={
                         <Icon
@@ -73,6 +74,7 @@ class LoginScreen extends PureComponent {
                             color={Color.ICON_DEFAULT}
                         />
                     }
+                        inputStyle={styles.inputStyle}
                         onChangeText={value => this.onPasswordInput(value)} />
                 </View>
                 <View style={styles.btnArea}>
@@ -102,6 +104,9 @@ const styles = StyleSheet.create({
     },
     inputArea: {
         marginTop: dp(60)
+    },
+    inputStyle: {
+        fontSize: dp(28)
     },
     btnArea: {
         paddingHorizontal: dp(16),

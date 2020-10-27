@@ -193,57 +193,62 @@ const styles = StyleSheet.create({
     },
     contentInputSection: {
         flexDirection: 'row',
-        marginTop: dp(10)
+        marginTop: dp(10),
     },
     label: {
-        fontSize: dp(24),
+        fontSize: dp(30),
         color: Color.TEXT_DARK,
     },
     content: {
         flex: 1,
-        fontSize: dp(24),
+        fontSize: dp(30),
         color: Color.TEXT_MAIN,
+        marginLeft: dp(12),
     },
     titleInput: {
-        height: dp(60), 
+        height: dp(80), 
         borderWidth: 1, 
         borderColor: Color.THEME, 
         flex: 1, 
-        fontSize: dp(24) 
+        fontSize: dp(30),
+        borderRadius: dp(4),
+        marginLeft: dp(12),
     },
     contentInput: {
         height: dp(200), 
         borderWidth: 1, 
         borderColor: Color.THEME, 
         flex: 1, 
-        fontSize: dp(24)
+        fontSize: dp(30),
+        borderRadius: dp(4),
+        marginLeft: dp(12),
     },
     btnArea: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: dp(30),
+        marginTop: dp(40),
     },
     btn: {
         flex: 1,
     },
     btnText: {
         marginLeft: dp(8),
-        fontSize: dp(28),
+        fontSize: dp(30),
         color: Color.TEXT_MAIN,
     },
     bottomSheetText: {
-        fontSize: dp(30),
+        fontSize: dp(32),
         color: Color.TEXT_MAIN,
         backgroundColor: Color.WHITE,
         textAlign: 'center',
-        paddingVertical: dp(10)
+        paddingVertical: dp(24)
     },
     bottomSheetCancelText: {
-        fontSize: dp(30),
+        fontSize: dp(32),
         color: Color.THEME,
         backgroundColor: Color.WHITE,
         textAlign: 'center',
-        paddingVertical: dp(10)
+        paddingVertical: dp(24)
     }
 })
 

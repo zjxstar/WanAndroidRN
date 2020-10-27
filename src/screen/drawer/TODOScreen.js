@@ -5,12 +5,12 @@ import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { getRealDP as dp } from '../../utils/screenUtil';
-import TODOFlatList from '../../components/TODOFlatList';
+import TodoFlatList from '../../components/TodoFlatList';
 
 /**
  * TODO
  */
-export default class TODOScreen extends Component {
+export default class TodoScreen extends Component {
 
     constructor(props) {
         super(props)
@@ -55,7 +55,7 @@ export default class TODOScreen extends Component {
                         }}>
                         {this.state.tabs.map(item => (
                             <Tab.Screen key={item.id} name={item.title} options={{ tabBarLabel: item.title }}>
-                                {props => <TODOFlatList {...props} type={item.type} />}
+                                {props => <TodoFlatList {...props} type={item.type} />}
                             </Tab.Screen>
                         ))}
                     </Tab.Navigator>

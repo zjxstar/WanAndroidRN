@@ -58,7 +58,6 @@ export default class NavigationScreen extends Component {
             }
         ).catch(
             err => {
-                console.log('get nav data err: ', err)
                 that.setState({
                     isFetching: false,
                 })
@@ -133,16 +132,16 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     listItemChecked: {
-        height: dp(60),
         alignItems: "center",
         justifyContent: 'center',
-        backgroundColor: Color.WHITE
+        backgroundColor: Color.WHITE,
+        paddingVertical: dp(20),
     },
     listItemUnChecked: {
-        height: dp(60),
         alignItems: "center",
         justifyContent: 'center',
-        backgroundColor: Color.DEFAULT_BG
+        backgroundColor: Color.DEFAULT_BG,
+        paddingVertical: dp(20),
     },
     leftTextChecked: {
         color: Color.THEME
@@ -175,8 +174,7 @@ const styles = StyleSheet.create({
         borderRadius: dp(30),
     },
     navigationName: {
-        lineHeight: dp(30),
-        fontSize: dp(26),
+        fontSize: dp(30),
         marginVertical: dp(20),
         fontWeight: 'bold'
     }

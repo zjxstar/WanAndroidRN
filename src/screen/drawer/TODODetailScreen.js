@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, Alert} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
@@ -10,7 +10,7 @@ import { finishTodo, deleteTodo} from '../../api';
 /**
  * todo详情页
  */
-class TODODetailScreen extends PureComponent {
+class TodoDetailScreen extends PureComponent {
 
     constructor(props) {
         super(props)
@@ -142,19 +142,19 @@ class TODODetailScreen extends PureComponent {
 
                         <View style={styles.btnArea}>
                             {!finished && (
-                                <TouchableWithoutFeedback onPress={() => this.reqFinishTodo(item)}>
+                                <TouchableOpacity style={styles.btnWrapper} onPress={() => this.reqFinishTodo(item)}>
                                     <View style={styles.btn}>
                                         <Ionicons name='md-checkmark-circle' size={dp(44)} color={Color.THEME} />
                                         <Text style={styles.btnText}>完成</Text>
                                     </View>
-                                </TouchableWithoutFeedback>
+                                </TouchableOpacity>
                             )}
-                            <TouchableWithoutFeedback onPress={() => this.confirmDeleteTodo(item)}>
+                            <TouchableOpacity style={styles.btnWrapper} onPress={() => this.confirmDeleteTodo(item)}>
                                 <View style={styles.btn}>
                                     <Ionicons name='md-close-circle' size={dp(44)} color={Color.THEME} />
                                     <Text style={styles.btnText}>删除</Text>
                                 </View>
-                            </TouchableWithoutFeedback>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ScrollView>
@@ -175,28 +175,37 @@ const styles = StyleSheet.create({
         marginTop: dp(10)
     },
     label: {
-        fontSize: dp(24),
+        fontSize: dp(30),
         color: Color.TEXT_DARK,
     },
     content: {
         flex: 1,
-        fontSize: dp(24),
+        fontSize: dp(30),
         color: Color.TEXT_MAIN,
+        marginLeft: dp(12),
     },
     btnArea: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: dp(30),
+        marginTop: dp(40),
+    },
+    btnWrapper: {
+        flex: 1, 
+        backgroundColor: Color.AVATAR_BACKGROUND,
+        paddingVertical: dp(14),
+        marginHorizontal: dp(2),
+        borderRadius: dp(4),
     },
     btn: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     btnText: {
         marginLeft: dp(8),
-        fontSize: dp(28),
+        fontSize: dp(30),
         color: Color.TEXT_MAIN,
     }
 })
 
-export default TODODetailScreen
+export default TodoDetailScreen

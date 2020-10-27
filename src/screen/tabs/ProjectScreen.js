@@ -73,8 +73,7 @@ export default class ProjectScreen extends Component {
                             </Tab.Screen>
                         ))}
                     </Tab.Navigator>
-                )
-                }
+                )}
             </View>
         )
     }

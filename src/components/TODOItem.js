@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import Color from '../styles/color';
 import { getRealDP as dp } from '../utils/screenUtil';
-import Tag from '../components/Tag'
+import Tag from './Tag'
 
-class TODOItem extends PureComponent {
+class TodoItem extends PureComponent {
 
     constructor(props) {
         super(props)
@@ -37,7 +37,7 @@ class TODOItem extends PureComponent {
                         <Text style={{ fontSize: dp(32), color: Color.TEXT_MAIN }}>{item.title}</Text>
                     </View>
                     <View style={styles.lineThree}>
-                        <Text style={{ fontSize: dp(20), color: Color.TEXT_LIGHT }}>{item.content}</Text>
+                        <Text style={{ fontSize: dp(24), color: Color.TEXT_LIGHT }}>{item.content}</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default TODOItem
+export default TodoItem

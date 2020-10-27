@@ -75,6 +75,7 @@ class CollectScreen extends Component {
                         data={articles}
                         renderItem={this.renderListItem}
                         keyExtractor={(item, index) => item.id.toString()}
+                        ListHeaderComponent={this.renderFooter}
                         ListFooterComponent={this.renderFooter}
                         onEndReached={() => { this.loadMoreArticles() }}
                         refreshing={isFetching} />

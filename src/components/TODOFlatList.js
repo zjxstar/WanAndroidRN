@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react'
 import { View, StyleSheet, Text } from 'react-native';
 import globalStyles from '../styles/globalStyles'
-import TODOItem from './TODOItem';
+import TodoItem from './TodoItem';
 import CommonFlatList from './CommonFlatList';
-import { getMyTODOList } from '../api';
+import { getMyTodoList } from '../api';
 import { getRealDP as dp } from '../utils/screenUtil';
 
 /**
  * TODO列表
  * 这里不使用Redux
  */
-class TODOFlatList extends PureComponent {
+class TodoFlatList extends PureComponent {
 
     constructor(props) {
         super(props)
@@ -36,7 +36,7 @@ class TODOFlatList extends PureComponent {
     renderListItem({item, index}) {
         const { navigation } = this.props
         return (
-            <TODOItem navigation={navigation} item={item} />
+            <TodoItem navigation={navigation} item={item} />
         )
     }
 
@@ -54,7 +54,7 @@ class TODOFlatList extends PureComponent {
             isFetching: true
         })
         
-        getMyTODOList(type).then(
+        getMyTodoList(type).then(
             res => {
                 let todoObj = res.data
                 that.setState({
@@ -84,7 +84,7 @@ class TODOFlatList extends PureComponent {
         let that = this
         console.log('load more todo page: ', this.state.page, ' type: ', type)
         
-        getMyTODOList(type, this.state.page).then(
+        getMyTodoList(type, this.state.page).then(
             res => {
                 let todoObj = res.data
                 that.setState({
@@ -121,4 +121,4 @@ class TODOFlatList extends PureComponent {
     }
 }
 
-export default TODOFlatList
+export default TodoFlatList
