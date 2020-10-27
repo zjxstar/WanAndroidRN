@@ -16,6 +16,7 @@ class TODODetailScreen extends PureComponent {
         super(props)
         
         this.reqFinishTodo = this.reqFinishTodo.bind(this)
+        this.toUpdateTodoPage = this.toUpdateTodoPage.bind(this)
     }
 
     state = {
@@ -64,6 +65,14 @@ class TODODetailScreen extends PureComponent {
         })
     }
 
+    toUpdateTodoPage(item) {
+        const {navigation} = this.props
+        navigation.navigate('UpdateTodo', {
+            item: JSON.stringify(item),
+            callback: (newItem) => this.setState({item: newItem})
+        })
+    }
+
     render() {
         const {navigation} = this.props
         const {item} = this.state
@@ -73,8 +82,13 @@ class TODODetailScreen extends PureComponent {
 
         return (
             <View style={globalStyles.container}>
-                <HeaderBar title={headerBarTitle} navigation={navigation} type='back' 
-                    right={{ icon: 'edit', color: Color.WHITE, size: dp(40), onPress: () => console.log('edit todo') }}/>
+                {finished && (
+                    <HeaderBar title={headerBarTitle} navigation={navigation} type='back' />
+                )}
+                {!finished && (
+                    <HeaderBar title={headerBarTitle} navigation={navigation} type='back'
+                        right={{ icon: 'edit', color: Color.WHITE, size: dp(40), onPress: () => this.toUpdateTodoPage(item) }} />
+                )}
                 <ScrollView style={{flex: 1}}>
                     <View style={styles.body}>
                         <View style={styles.section}>

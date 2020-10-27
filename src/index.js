@@ -23,6 +23,7 @@ import ArticleTabScreen from './screen/article/ArticleTabScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getRealDP as dp } from './utils/screenUtil';
 import AddTodoScreen from './screen/drawer/AddTodoScreen';
+import UpdateTodoScreen from './screen/drawer/UpdateTodoScreen';
 
 const Tab = createBottomTabNavigator()
 
@@ -95,6 +96,7 @@ function RootStack() {
             <Stack.Screen name="TODO" component={TODOScreen} />
             <Stack.Screen name="TODODetail" component={TODODetailScreen} />
             <Stack.Screen name="AddTodo" component={AddTodoScreen} />
+            <Stack.Screen name="UpdateTodo" component={UpdateTodoScreen} />
             <Stack.Screen name="About" component={AboutScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />

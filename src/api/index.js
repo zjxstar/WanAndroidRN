@@ -207,6 +207,25 @@ export function addTodo(title, content, date, type = 1, priority = 2) {
 }
 
 /**
+ * 修改一个TODO
+ * @param {Number} id todo的id
+ * @param {String} title 标题
+ * @param {String} content 详情
+ * @param {String} date 待办日期
+ * @param {Number} type 分类：1：工作，2：学习，3：生活
+ * @param {Number} priority 等级：1：重要，2：一般
+ */
+export function updateTodo(id, title, content, date, type = 1, priority = 2) {
+    return post(`lg/todo/update/${id}/json`, {
+        title,
+        content,
+        date,
+        type,
+        priority,
+    })
+}
+
+/**
  * 完成一个TODO
  * @param {Number} id TODO的id
  */
