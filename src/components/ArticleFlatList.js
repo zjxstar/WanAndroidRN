@@ -45,27 +45,26 @@ class ArticleFlatList extends PureComponent {
         if (item.collect) {
             // 取消收藏
             uncollectArticleInList(item.id).then(res => {
-                console.log('unfavor')
                 let tempArticles = [...this.state.articles]
                 tempArticles[index].collect = false
-                console.log('temp: ', tempArticles)
                 this.setState({
                     articles: tempArticles
                 })
+                global.toast.show('已取消收藏')
             }).catch(err => {
-                console.log('uncollectArticleInList err: ', err)
+                global.toast.show(err)
             })
         } else {
             // 收藏文章
             favorArticleInner(item.id).then(res => {
-                console.log('favor')
                 let tempArticles = [...this.state.articles]
                 tempArticles[index].collect = true
                 this.setState({
                     articles: tempArticles
                 })
+                global.toast.show('收藏成功')
             }).catch(err => {
-                console.log('favor inner article err: ', err)
+                global.toast.show(err)
             })
         }
     }

@@ -83,9 +83,10 @@ class UpdateTodoScreen extends PureComponent {
             })
             const {route} = this.props
             route.params.callback(res.data)
+            global.toast.show('修改成功')
             this.props.navigation.goBack()
         }).catch(err => {
-            console.log('add todo err: ', err)
+            global.toast.show(err)
             this.setState({
                 isLoading: false,
             })

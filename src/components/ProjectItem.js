@@ -38,6 +38,7 @@ class ProjectItem extends PureComponent {
     }
 
     toLoginPage() {
+        global.toast.show('请先登录')
         const { navigation } = this.props
         navigation.navigate('Login')
     }

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, Alert} from 'react-native';
 import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
@@ -17,6 +17,7 @@ class TODODetailScreen extends PureComponent {
         
         this.reqFinishTodo = this.reqFinishTodo.bind(this)
         this.toUpdateTodoPage = this.toUpdateTodoPage.bind(this)
+        this.confirmDeleteTodo = this.confirmDeleteTodo.bind(this)
     }
 
     state = {
@@ -39,12 +40,30 @@ class TODODetailScreen extends PureComponent {
                 isLoading: false,
                 item: res.data
             })
+            global.toast.show('该TODO已完成')
         }).catch(err => {
-            console.log('finished err: ',err)
+            global.toast.show(err)
             this.setState({
                 isLoading: false,
             })
         })
+    }
+
+    confirmDeleteTodo(item) {
+        Alert.alert(
+            '提示',
+            '确认要删除该TODO吗？',
+            [
+                {
+                    text: '取消',
+                    style: 'cancel'
+                },
+                {
+                    text: '确定',
+                    onPress: () => { this.reqDeleteTodo(item) },
+                }
+            ]
+        )
     }
 
     reqDeleteTodo(item) {
@@ -56,9 +75,10 @@ class TODODetailScreen extends PureComponent {
             this.setState({
                 isLoading: false,
             })
+            global.toast.show('该TODO已删除')
             navigation.goBack()
         }).catch(err => {
-            console.log('delete err: ', err)
+            global.toast.show(err)
             this.setState({
                 isLoading: false,
             })
@@ -129,7 +149,7 @@ class TODODetailScreen extends PureComponent {
                                     </View>
                                 </TouchableWithoutFeedback>
                             )}
-                            <TouchableWithoutFeedback onPress={() => this.reqDeleteTodo(item)}>
+                            <TouchableWithoutFeedback onPress={() => this.confirmDeleteTodo(item)}>
                                 <View style={styles.btn}>
                                     <Ionicons name='md-close-circle' size={dp(44)} color={Color.THEME} />
                                     <Text style={styles.btnText}>删除</Text>

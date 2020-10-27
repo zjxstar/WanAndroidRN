@@ -54,13 +54,13 @@ class AddTodoScreen extends PureComponent {
         })
         const {curLevelNum, curTypeNum, date} = this.state
         addTodo(title, content, date, curTypeNum, curLevelNum).then(res => {
-            console.log('add todo succ: ', res.data)
             this.setState({
                 isLoading: false,
             })
+            global.toast.show('创建TODO成功')
             this.props.navigation.goBack()
         }).catch(err => {
-            console.log('add todo err: ', err)
+            global.toast.show(err)
             this.setState({
                 isLoading: false,
             })

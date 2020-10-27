@@ -40,9 +40,7 @@ class HomeScreen extends Component {
         let that = this
         this.props.navigation.addListener('focus', () => {
             const { isLogin } = that.props
-            console.log('home on resume curlogin: ', isLogin, ' lastlogin: ', lastIsLogin)
             if (isLogin != lastIsLogin) {
-                console.log('force refresh')
                 that.refreshPage()
                 lastIsLogin = isLogin
             }
@@ -76,22 +74,21 @@ class HomeScreen extends Component {
         const { topArticles} = this.props
         let isTop = item.type === 1
         let realIndex = isTop ? index : index - topArticles.length
-        console.log('favor isTop: ', isTop, ' index:', realIndex)
         if (item.collect) {
             // 取消收藏
             uncollectArticleInList(item.id).then(res => {
-                console.log('unfavor')
+                global.toast.show('已取消收藏')
                 this.props.updateUnfavorArticle(isTop, realIndex)
             }).catch(err => {
-                console.log('uncollectArticleInList err: ', err)
+                global.toast.show(err)
             })
         } else {
             // 收藏文章
             favorArticleInner(item.id).then(res => {
-                console.log('favor')
+                global.toast.show('收藏成功')
                 this.props.updateFavorArticle(isTop, realIndex)
             }).catch(err => {
-                console.log('favor inner article err: ', err)
+                global.toast.show(err)
             })
         }
     }

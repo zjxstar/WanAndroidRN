@@ -123,6 +123,7 @@ export function toLogin(username, password, navigation) {
         return login(username, password).then(res => {
             AuthUtil.saveUserInfo(res.data)
             dispatch(loginAction(res.data))
+            global.toast.show('登录成功')
             navigation.goBack()
         }).catch(err => {
             dispatch(loginFailureAction())
@@ -142,6 +143,7 @@ export function toRegister(username, password, repassword, navigation) {
         return register(username, password, repassword).then(res => {
             AuthUtil.saveUserInfo(res.data)
             dispatch(registerAction(res.data))
+            global.toast.show('注册成功')
             navigation.popToTop()
         }).catch(err => {
             dispatch(registerFailureAction())

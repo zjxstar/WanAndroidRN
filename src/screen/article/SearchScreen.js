@@ -106,9 +106,9 @@ class SearchScreen extends Component {
                     onChangeText={this.updateSearch}
                     value={search}
                     lightTheme
-                    inputStyle={{color: '#111111'}}
+                    inputStyle={{color: '#111111', fontSize: dp(28)}}
                     containerStyle={{backgroundColor: Color.WHITE}}
-                    inputContainerStyle={{ backgroundColor: '#F5F6F7'}}
+                    inputContainerStyle={{ backgroundColor: '#F5F6F7', height: dp(68)}}
                 />
                 {articles.length === 0 && hotKeys.length > 0 && (
                     <View style={styles.keysContainer}>

@@ -34,7 +34,7 @@ export default class TODOScreen extends Component {
                         lazy={true}
                         backBehavior='none'
                         tabBarOptions={{
-                            scrollEnabled: true,
+                            scrollEnabled: false,
                             activeTintColor: Color.WHITE,
                             labelStyle: {
                                 fontFamily: '',
@@ -42,14 +42,11 @@ export default class TODOScreen extends Component {
                                 textTransform: 'none',
                             },
                             tabStyle: {
-                                width: dp(200),
                                 height: dp(100),
                             },
                             indicatorStyle: {
                                 backgroundColor: Color.WHITE,
-                                width: dp(100),
                                 height: dp(4),
-                                marginLeft: dp(50)
                             },
                             style: {
                                 backgroundColor: Color.THEME,

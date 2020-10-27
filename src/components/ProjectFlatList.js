@@ -44,27 +44,26 @@ class ProjectFlatList extends PureComponent {
         if (item.collect) {
             // 取消收藏
             uncollectArticleInList(item.id).then(res => {
-                console.log('unfavor')
                 let tempProjects = [...this.state.projects]
                 tempProjects[index].collect = false
-                console.log('temp: ',tempProjects)
                 this.setState({
                     projects: tempProjects
                 })
+                global.toast.show('已取消收藏')
             }).catch(err => {
-                console.log('uncollectArticleInList err: ', err)
+                global.toast.show(err)
             })
         } else {
             // 收藏文章
             favorArticleInner(item.id).then(res => {
-                console.log('favor')
                 let tempProjects = [...this.state.projects]
                 tempProjects[index].collect = true
                 this.setState({
                     projects: tempProjects
                 })
+                global.toast.show('收藏成功')
             }).catch(err => {
-                console.log('favor inner article err: ', err)
+                global.toast.show(err)
             })
         }
     }
@@ -95,7 +94,6 @@ class ProjectFlatList extends PureComponent {
             }
         ).catch(
             err => {
-                console.log('refresh projects err: ', err)
                 that.setState({
                     isFetching: false,
                 })
@@ -110,8 +108,6 @@ class ProjectFlatList extends PureComponent {
             return
         }
         let that = this
-        console.log('load more project page: ', this.state.page, ' cid: ', cid)
-        
         getProjects(cid, this.state.page).then(
             res => {
                 let projectsObj = res.data
@@ -124,7 +120,6 @@ class ProjectFlatList extends PureComponent {
             }
         ).catch(
             err => {
-                console.log('load more projects err: ', err)
                 that.setState({
                     isFetching: false,
                 })
@@ -133,7 +128,6 @@ class ProjectFlatList extends PureComponent {
     }
 
     render() {
-        console.log('projects: ', this.state.projects)
         return (
             <View style={globalStyles.container}>
                 <CommonFlatList

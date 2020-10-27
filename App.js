@@ -5,8 +5,9 @@ import DrawerStack from './src';
 import { Provider } from 'react-redux'
 import store from './src/store';
 import AuthUtil from './src/utils/authUtil';
-import { initLoginUserInfoAction, getUserCoinAction} from './src/actions/actionCreator';
-import { getMyCoin} from './src/api';
+import { initLoginUserInfoAction, getUserCoinAction } from './src/actions/actionCreator';
+import { getMyCoin } from './src/api';
+import Toast from './src/components/Toast'
 
 /** 解决Text在miui系统上出现截断问题 */
 const defaultFontFamily = {
@@ -28,6 +29,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.initInfo = this.initInfo.bind(this)
+    this.toast = React.createRef()
   }
 
   async UNSAFE_componentWillMount() {
@@ -43,6 +45,10 @@ export default class App extends Component {
     }
   }
 
+  componentDidMount() {
+    global.toast = this.toast.current
+  }
+
   async initInfo() {
     const userInfo = await AuthUtil.getUserInfo()
     const authInfo = {
@@ -56,11 +62,12 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={{flex: 1}}>
-          <StatusBar barStyle='light-content' translucent={true} backgroundColor = 'transparent'/>
+        <View style={{ flex: 1 }}>
+          <StatusBar barStyle='light-content' translucent={true} backgroundColor='transparent' />
           <NavigationContainer>
             <DrawerStack />
           </NavigationContainer>
+          <Toast ref={this.toast} />
         </View>
       </Provider>
     )

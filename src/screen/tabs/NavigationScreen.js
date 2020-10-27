@@ -51,7 +51,6 @@ export default class NavigationScreen extends Component {
         })
         getNavigationData().then(
             res => {
-                console.log('get nav data succ: ', res.data)
                 that.setState({
                     navDatas: res.data,
                     isFetching: false,

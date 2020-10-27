@@ -27,6 +27,7 @@ class CustomDrawerContent extends PureComponent {
         this.toLoginPage = this.toLoginPage.bind(this)
         this.toLogout = this.toLogout.bind(this)
         this.reqLogout = this.reqLogout.bind(this)
+        this.toSecondPage = this.toSecondPage.bind(this)
     }
 
     toLoginPage(navigation) {
@@ -54,6 +55,7 @@ class CustomDrawerContent extends PureComponent {
         this.props.logout()
         AuthUtil.removeUserInfo()
         AuthUtil.removeCookie()
+        global.toast.show('已退出当前帐号')
     }
 
     componentDidMount() {
@@ -75,6 +77,23 @@ class CustomDrawerContent extends PureComponent {
         })
     }
 
+    toSecondPage(type) {
+        const { isLogin, navigation } = this.props
+        if (isLogin) {
+            switch(type) {
+                case 'COLLECT':
+                    navigation.navigate('COLLECT')
+                    break
+                case 'TODO':
+                    navigation.navigate('TODO')
+                    break
+            }
+        } else {
+            global.toast.show('请先登录')
+            this.toLoginPage(navigation)
+        }
+    }
+
     render() {
         const { navigation, isLogin, userInfo, level, coinCount, rank} = this.props
         console.log('on resume login: ', isLogin)
@@ -86,7 +105,6 @@ class CustomDrawerContent extends PureComponent {
                             size="large"
                             rounded
                             title={userInfo.username.substring(0,1)}
-                            onPress={() => this.toLoginPage(navigation)}
                             activeOpacity={0.7}
                             containerStyle={{ backgroundColor: Color.AVATAR_BACKGROUND, marginTop: dp(80) }}
                         />
@@ -105,11 +123,11 @@ class CustomDrawerContent extends PureComponent {
                         />
                     </View>
                 )}
-                <DrawerItem label="我的收藏" onPress={() => navigation.navigate('COLLECT')}
+                <DrawerItem label="我的收藏" onPress={() => this.toSecondPage('COLLECT')}
                     icon={({ focused, color, size }) => {
                         return <Ionicons name={'heart'} color={Color.ICON_DEFAULT} size={size} />
                     }} />
-                <DrawerItem label="TODO" onPress={() => navigation.navigate('TODO')}
+                <DrawerItem label="TODO" onPress={() => this.toSecondPage('TODO')}
                     icon={({ focused, color, size }) => {
                         return <Ionicons name={'pricetag'} color={Color.ICON_DEFAULT} size={size} />
                     }} />

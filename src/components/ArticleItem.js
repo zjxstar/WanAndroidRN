@@ -41,6 +41,7 @@ class ArticleItem extends Component {
     }
 
     toLoginPage() {
+        global.toast.show('请先登录')
         const {navigation } = this.props
         navigation.navigate('Login')
     }

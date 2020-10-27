@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
-import { Header, Avatar, } from 'react-native-elements';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Header, Avatar } from 'react-native-elements';
 import Color from '../styles/color';
 import PropTypes from 'prop-types';
 import { getRealDP as dp } from '../utils/screenUtil';
@@ -35,15 +35,12 @@ class HeaderBar extends PureComponent {
         
         if (isLogin) {
             let avatarName = userInfo.username.substring(0, 1)
-            console.log('avatarName', avatarName)
             return (
-                <Avatar
-                    rounded
-                    title={avatarName === '' ? '玩' : avatarName}
-                    onPress={() => navigation.toggleDrawer()}
-                    size={dp(40)}
-                    activeOpacity={0.7}
-                    containerStyle={{ backgroundColor: Color.AVATAR_BACKGROUND}} />
+                <TouchableWithoutFeedback onPress={() => navigation.toggleDrawer()}>
+                    <View style={{ backgroundColor: Color.AVATAR_BACKGROUND, width: dp(40), height: dp(40), borderRadius:dp(20), alignItems:'center'}}>
+                        <Text style={{color: Color.WHITE}}>{avatarName}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             )
         } else {
             return (

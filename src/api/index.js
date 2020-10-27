@@ -89,7 +89,6 @@ export function getProjects(cid, page = 1) {
  * @param {String} password 密码
  */
 export function login(username, password) {
-    console.log('login u: ', username, ' p: ', password)
     return post('user/login', {
         username: username,
         password: password
