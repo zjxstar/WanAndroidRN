@@ -218,7 +218,6 @@ export function fetchCollectArticles() {
         return getCollectArticles().then(res => {
             dispatch(getCollectArticlesAction(res.data))
         }).catch(err => {
-            console.log('collect a err: ', err)
             dispatch(getCollectArticlesFailureAction())
         })
     }
@@ -235,7 +234,6 @@ export function fetchCollectArticlesMore(page) {
         return getCollectArticles(page).then(res => {
             dispatch(getCollectArticlesMoreAction(res.data))
         }).catch(err => {
-            console.log('collect a more err: ', err)
             dispatch(getCollectArticlesFailureAction())
         })
     }

@@ -41,7 +41,6 @@ class SystemScreen extends PureComponent {
     }
 
     refreshSystemTree() {
-        console.log('refresh sys tree')
         this.props.reqSystemTree()
     }
 

@@ -82,7 +82,6 @@ class TodoFlatList extends PureComponent {
             return
         }
         let that = this
-        console.log('load more todo page: ', this.state.page, ' type: ', type)
         
         getMyTodoList(type, this.state.page).then(
             res => {

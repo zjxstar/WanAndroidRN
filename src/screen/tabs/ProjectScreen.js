@@ -24,7 +24,6 @@ export default class ProjectScreen extends Component {
         let that = this
         getProjectTabs().then(res => {
             let projectTabs = res.data
-            console.log('get project tabs: ', projectTabs)
             that.setState({
                 tabs: projectTabs
             })

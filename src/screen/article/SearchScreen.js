@@ -39,7 +39,6 @@ class SearchScreen extends Component {
 
     reqHotKeys() {
         getHotKeys().then(res => {
-            console.log('search hot keys: ', res.data)
             this.setState({
                 hotKeys: res.data
             })

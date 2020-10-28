@@ -65,7 +65,6 @@ class CustomDrawerContent extends PureComponent {
 
         this.props.navigation.addListener('focus', () => {
             const {isLogin} = that.props
-            console.log('drawer on resume: ', isLogin)
             if (isLogin) {
                 that.props.reqMyCoin()
             }
@@ -96,7 +95,6 @@ class CustomDrawerContent extends PureComponent {
 
     render() {
         const { navigation, isLogin, userInfo, level, coinCount, rank} = this.props
-        console.log('on resume login: ', isLogin)
         return (
             <View style={globalStyles.container}>
                 {isLogin && userInfo && (

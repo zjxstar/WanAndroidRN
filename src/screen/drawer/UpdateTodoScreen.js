@@ -77,7 +77,6 @@ class UpdateTodoScreen extends PureComponent {
         })
         const { item, curLevelNum, curTypeNum, date} = this.state
         updateTodo(item.id, title, content, date, curTypeNum, curLevelNum).then(res => {
-            console.log('update todo succ: ', res.data)
             this.setState({
                 isLoading: false,
             })

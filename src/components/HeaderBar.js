@@ -31,7 +31,6 @@ class HeaderBar extends PureComponent {
 
     renderHeaderAvatar() {
         const { navigation, isLogin, userInfo } = this.props
-        console.log('header bar isLogin: ', isLogin, ' userInfo: ', userInfo)
         
         if (isLogin) {
             let avatarName = userInfo.username.substring(0, 1)

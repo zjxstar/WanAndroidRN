@@ -37,7 +37,6 @@ export default class App extends Component {
     const userInfo = await AuthUtil.getUserInfo()
     if (!!userInfo) {
       getMyCoin().then(res => {
-        console.log('fetch my coin: ', res.data)
         store.dispatch(getUserCoinAction(res.data))
       }).catch(err => {
         console.log('fetch my coin err: ', err)
@@ -55,7 +54,6 @@ export default class App extends Component {
       isLogin: !!userInfo,
       userInfo
     }
-    console.log('authInfo: ', authInfo)
     store.dispatch(initLoginUserInfoAction(authInfo))
   }
 

@@ -49,7 +49,6 @@ const home = (state = initialState, action) => {
                 isFetching: false,
             }
         case actionTypes.UPDATE_HOME_FAVOR_ARTICLE:
-            console.log('favor action: ', action)
             if (action.isTop) {
                 let tempTopArticles = [...state.topArticles]
                 tempTopArticles[action.index].collect = true
@@ -66,7 +65,6 @@ const home = (state = initialState, action) => {
                 }
             }
         case actionTypes.UPDATE_HOME_UNFAVOR_ARTICLE:
-            console.log('unfavor action: ', action)
             if (action.isTop) {
                 let tempTopArticles = [...state.topArticles]
                 tempTopArticles[action.index].collect = false

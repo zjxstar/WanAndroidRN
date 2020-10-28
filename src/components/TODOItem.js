@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native';
 import Color from '../styles/color';
 import { getRealDP as dp } from '../utils/screenUtil';
 import Tag from './Tag'
+import {deleteTodo} from '../api';
 
 class TodoItem extends PureComponent {
 
@@ -11,6 +12,12 @@ class TodoItem extends PureComponent {
         super(props)
 
         this.toDetailPage = this.toDetailPage.bind(this)
+        this.confirmDeleteTodo = this.confirmDeleteTodo.bind(this)
+        this.reqDeleteTodo = this.reqDeleteTodo.bind(this)
+    }
+
+    state = {
+        isLoading: false,
     }
 
     toDetailPage(item) {
@@ -20,11 +27,49 @@ class TodoItem extends PureComponent {
         })
     }
 
+    confirmDeleteTodo(item) {
+        Alert.alert(
+            '提示',
+            '确认要删除该TODO吗？',
+            [
+                {
+                    text: '取消',
+                    style: 'cancel'
+                },
+                {
+                    text: '确定',
+                    onPress: () => { this.reqDeleteTodo(item) },
+                }
+            ]
+        )
+    }
+
+    reqDeleteTodo(item) {
+        const { navigation } = this.props
+        this.setState({
+            isLoading: true,
+        })
+        deleteTodo(item.id).then(res => {
+            this.setState({
+                isLoading: false,
+            })
+            global.toast.show('该TODO已删除')
+            navigation.goBack()
+        }).catch(err => {
+            global.toast.show(err)
+            this.setState({
+                isLoading: false,
+            })
+        })
+    }
+
     render() {
         let {item} = this.props
 
         return (
-            <TouchableWithoutFeedback style={styles.container} onPress={() => this.toDetailPage(item)} onLongPress={() => console.log('delete todo')}>
+            <TouchableWithoutFeedback style={styles.container} 
+                onPress={() => this.toDetailPage(item)} 
+                onLongPress={() => this.confirmDeleteTodo(item)}>
                 <View style={styles.itemWrapper}>
                     <View style={styles.lineOne}>
                         <View style={styles.lineContentLeft}>

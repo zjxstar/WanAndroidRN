@@ -78,7 +78,6 @@ class ArticleFlatList extends PureComponent {
     refreshList() {
         const { cid, isWX } = this.props
         let that = this
-        console.log('fresh system tree a cid: ', cid)
         this.setState({
             isFetching: true
         })
@@ -132,7 +131,6 @@ class ArticleFlatList extends PureComponent {
             return
         }
         let that = this
-        console.log('load more s t a page: ', this.state.page, ' cid: ', cid)
         if (isWX) {
             getWXArticles(cid, this.state.page).then(
                 res => {
