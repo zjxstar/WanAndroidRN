@@ -101,7 +101,7 @@ class TodoDetailScreen extends PureComponent {
         let type = item.type === 1 ? '工作' : (item.type === 2 ? '学习' : '生活')
 
         return (
-            <View style={globalStyles.container}>
+            <View style={styles.container}>
                 {finished && (
                     <HeaderBar title={headerBarTitle} navigation={navigation} type='back' />
                 )}
@@ -165,6 +165,10 @@ class TodoDetailScreen extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Color.WHITE,
+    }, 
     body: {
         marginTop: dp(20),
         paddingHorizontal: dp(16)

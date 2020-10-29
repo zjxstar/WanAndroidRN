@@ -96,7 +96,7 @@ class UpdateTodoScreen extends PureComponent {
         const { navigation } = this.props
         const { curTitle, curContent, levelVisible, typeVisible, curLevel, curType, datePickerVisible, date, isLoading} = this.state
         return (
-            <View style={globalStyles.container}>
+            <View style={styles.container}>
                 <HeaderBar title='修改TODO' navigation={navigation} type='back' />
                 <ScrollView style={{ flex: 1 }}>
                     <View style={styles.body}>
@@ -207,6 +207,10 @@ class UpdateTodoScreen extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Color.WHITE,
+    }, 
     body: {
         marginTop: dp(20),
         paddingHorizontal: dp(16)

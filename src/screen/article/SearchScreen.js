@@ -97,7 +97,7 @@ class SearchScreen extends Component {
         const { navigation, articles, isFetching} = this.props
         const {search, hotKeys} = this.state
         return (
-            <View style={globalStyles.container}>
+            <View style={styles.container}>
                 <HeaderBar title='搜索' navigation={navigation} type='back' />
                 <SearchBar
                     placeholder="请输入关键词"
@@ -130,6 +130,7 @@ class SearchScreen extends Component {
                         data={articles}
                         renderItem={this.renderListItem}
                         keyExtractor={(item, index) => item.id.toString()}
+                        ListHeaderComponent={this.renderFooter}
                         ListFooterComponent={this.renderFooter}
                         onEndReached={() => { this.loadMoreArticles() }}
                         refreshing={isFetching} />
@@ -141,7 +142,11 @@ class SearchScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    }, 
     keysContainer: {
+        flex: 1,
         backgroundColor: Color.WHITE,
         paddingVertical: dp(20),
         paddingHorizontal: dp(20),
