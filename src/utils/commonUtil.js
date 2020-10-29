@@ -3,6 +3,9 @@ export function filterHtmlFromStr(str) {
     content = content.replace(/&nbsp;/ig, '')
     content = content.replace(/&mdash;/ig, '—')
     content = content.replace(/&amp;amp;/ig, '&')
+    content = content.replace(/&amp;/ig, '&')
+    content = content.replace(/&ldquo;/ig, '“')
+    content = content.replace(/&rdquo;/ig, '”')
     return content
 }
 

@@ -8,6 +8,7 @@ import { getRealDP as dp } from '../../utils/screenUtil';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ProgressBar } from 'react-native-paper';
 import HeaderBar from '../../components/HeaderBar';
+import { filterHtmlFromStr } from '../../utils/commonUtil';
 
 /**
  * 展示文章内容
@@ -37,9 +38,10 @@ export default class WebViewScreen extends Component {
     render() {
         const { route, navigation } = this.props
         const { url, title } = route.params
+        let filterTitle = filterHtmlFromStr(title)
         return (
             <View style={globalStyles.container}>
-                <HeaderBar title={title} navigation={navigation} type='back' />
+                <HeaderBar title={filterTitle} navigation={navigation} type='back' />
                 <ProgressBar progress={this.state.progress} color={Color.THEME} />
                 <WebView 
                     source={{uri: url}} 
