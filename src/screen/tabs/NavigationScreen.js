@@ -5,6 +5,15 @@ import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color';
 import { getRealDP as dp } from '../../utils/screenUtil';
 import { getNavigationData } from '../../api';
+import {
+    Placeholder,
+    PlaceholderMedia,
+    PlaceholderLine,
+    Fade
+} from "rn-placeholder";
+import { Image } from 'react-native-elements';
+import LoadingView from '../../components/LoadingView';
+
 
 /**
  * 导航
@@ -29,6 +38,7 @@ export default class NavigationScreen extends Component {
 
     renderLeftListItem({item, index}) {
         let selectedIndex = this.state.selectedIndex
+        const { isFetching } = this.state
         return (
             <TouchableOpacity style={styles.listItemWrapper} onPress={() => this.onLeftItemClick(index)}>
                 <View style={selectedIndex === index ? styles.listItemChecked : styles.listItemUnChecked}>
@@ -79,44 +89,57 @@ export default class NavigationScreen extends Component {
         const { navigation } = this.props
         let datas = this.state.navDatas
         let index = this.state.selectedIndex
+        const {isFetching} = this.state
         return (
             <View style={globalStyles.container}>
                 <HeaderBar title='导航' navigation={navigation} />
-                <View style={styles.contentWrapper}>
-                    <View style={styles.leftListContainer}>
-                        <FlatList 
-                            data={datas}
-                            renderItem={this.renderLeftListItem}
-                            keyExtractor={item => item.cid.toString()} />
-                    </View>
-                    <View style={{backgroundColor: Color.WHITE, width: dp(2)}}></View>
-                    <View style={styles.rightDetailContainer}>
-                        <View style={styles.detailWrapper}>
-                            {datas.length > 0 && <Text style={styles.navigationName}>{datas[index].name}</Text>}
-                            <ScrollView style={{flex: 1,}}>
-                                <View style={styles.scrollWrapper}>
-                                {datas.length > 0 && datas[index].articles 
-                                    && datas[index].articles.length > 0 
-                                    && datas[index].articles.map( (item) => {
-                                    return (
-                                        <TouchableOpacity key={item.id.toString()} onPress={() => this.toWebView(item)}>
-                                            <View style={styles.tagWrapper}>
-                                                <Text style={{ color: Color.TEXT_DARK }}>{item.title}</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                )})}
-                                </View>
-                            </ScrollView>
+                {isFetching && (
+                    <LoadingView />
+                )}
+                {!isFetching && (
+                    <View style={styles.contentWrapper}>
+                        <View style={styles.leftListContainer}>
+                            <FlatList
+                                data={datas}
+                                renderItem={this.renderLeftListItem}
+                                keyExtractor={item => item.cid.toString()} />
                         </View>
-                        
+                        <View style={{ backgroundColor: Color.WHITE, width: dp(2) }}></View>
+                        <View style={styles.rightDetailContainer}>
+                            <View style={styles.detailWrapper}>
+                                {datas.length > 0 && <Text style={styles.navigationName}>{datas[index].name}</Text>}
+                                <ScrollView style={{ flex: 1, }}>
+                                    <View style={styles.scrollWrapper}>
+                                        {datas.length > 0 && datas[index].articles
+                                            && datas[index].articles.length > 0
+                                            && datas[index].articles.map((item) => {
+                                                return (
+                                                    <TouchableOpacity key={item.id.toString()} onPress={() => this.toWebView(item)}>
+                                                        <View style={styles.tagWrapper}>
+                                                            <Text style={{ color: Color.TEXT_DARK }}>{item.title}</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                )
+                                            })}
+                                    </View>
+                                </ScrollView>
+                            </View>
+
+                        </View>
                     </View>
-                </View>
+                )}
+                
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    placeholder: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     contentWrapper: {
         flex: 1,
         flexDirection: 'row',

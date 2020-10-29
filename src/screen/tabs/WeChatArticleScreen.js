@@ -7,6 +7,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ArticleFlatList from '../../components/ArticleFlatList';
 import { getRealDP as dp } from '../../utils/screenUtil';
 import { getWXTabs } from '../../api';
+import LoadingView from '../../components/LoadingView';
 
 /**
  * 公众号
@@ -16,31 +17,43 @@ export default class WeChatArticleScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            tabs: []
+            tabs: [],
+            firstLoading: false,
         }
     }
 
     componentDidMount() {
-        let that = this
+        this.setState({
+            firstLoading: true,
+        })
         getWXTabs().then(res => {
-            let wxtabs = res.data
-            that.setState({
-                tabs: wxtabs
+            this.setState({
+                tabs: res.data,
+                firstLoading: false,
             })
         }).catch(err => {
             console.log('get wx tabs err: ', err)
+            this.setState({
+                firstLoading: false,
+            })
         })
     }
 
 
     render() {
         const { navigation } = this.props
+        const { tabs, firstLoading } = this.state
         const Tab = createMaterialTopTabNavigator();
 
         return (
             <View style={globalStyles.container}>
                 <HeaderBar title='公众号' navigation={navigation} />
-                { this.state.tabs && this.state.tabs.length > 0 && (
+
+                {firstLoading && tabs.length === 0 && (
+                    <LoadingView />
+                )}
+
+                {!firstLoading && tabs.length > 0 && (
                     <Tab.Navigator
                         lazy={true}
                         backBehavior='none'
@@ -73,8 +86,7 @@ export default class WeChatArticleScreen extends Component {
                         </Tab.Screen>
                     ))}
                     </Tab.Navigator>
-                )
-                }
+                )}
             </View>
         )
     }

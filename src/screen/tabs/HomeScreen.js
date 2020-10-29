@@ -10,6 +10,7 @@ import CommonFlatList from '../../components/CommonFlatList';
 import { getRealDP as dp } from '../../utils/screenUtil';
 import HeaderBar from '../../components/HeaderBar';
 import { favorArticleInner, uncollectArticleInList} from '../../api';
+import LoadingView from '../../components/LoadingView';
 
 let lastIsLogin = false
 
@@ -25,7 +26,7 @@ class HomeScreen extends Component {
         super(props)
 
         this.state = {
-            forceRefresh: false
+            firstLoading: false
         }
 
         this.renderListHeader = this.renderListHeader.bind(this)
@@ -48,7 +49,13 @@ class HomeScreen extends Component {
     }
 
     async componentDidMount() {
+        this.setState({
+            firstLoading: true,
+        })
         await this.refreshPage()
+        this.setState({
+            firstLoading: false,
+        })
     }
 
     renderListHeader() {
@@ -107,6 +114,7 @@ class HomeScreen extends Component {
 
     render() {
         const { isFetching, navigation, topArticles, articles } = this.props
+        const { firstLoading } = this.state
         let allArticles = topArticles
         allArticles = allArticles.concat(articles)
         return (
@@ -114,14 +122,19 @@ class HomeScreen extends Component {
                 
                 <HeaderBar title='首页' navigation={navigation} />
 
-                <CommonFlatList 
-                    data={allArticles} 
-                    renderItem={this.renderListItem}
-                    keyExtractor={(item, index) => item.id.toString()}
-                    ListHeaderComponent={this.renderListHeader}
-                    onEndReached={() => {this.loadMoreArticles()}}
-                    refreshing={isFetching}
-                    onRefresh={this.refreshPage} />
+                {firstLoading && (
+                    <LoadingView />
+                )}
+                {!firstLoading && (
+                    <CommonFlatList
+                        data={allArticles}
+                        renderItem={this.renderListItem}
+                        keyExtractor={(item, index) => item.id.toString()}
+                        ListHeaderComponent={this.renderListHeader}
+                        onEndReached={() => { this.loadMoreArticles() }}
+                        refreshing={isFetching}
+                        onRefresh={this.refreshPage} />
+                )}
             </View>
         )
     }
