@@ -8,6 +8,7 @@ import AuthUtil from './src/utils/authUtil';
 import { initLoginUserInfoAction, getUserCoinAction } from './src/actions/actionCreator';
 import { getMyCoin } from './src/api';
 import Toast from './src/components/Toast'
+import SplashScreen from 'react-native-splash-screen'
 
 /** 解决Text在miui系统上出现截断问题 */
 const defaultFontFamily = {
@@ -45,6 +46,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    SplashScreen.hide();
     global.toast = this.toast.current
   }
 
