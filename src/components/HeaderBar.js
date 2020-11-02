@@ -26,6 +26,7 @@ class HeaderBar extends PureComponent {
 
     constructor(props) {
         super(props)
+        
         this.renderHeaderAvatar = this.renderHeaderAvatar.bind(this)
     }
 

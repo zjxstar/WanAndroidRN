@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'

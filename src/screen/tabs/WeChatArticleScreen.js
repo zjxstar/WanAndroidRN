@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
@@ -16,6 +16,7 @@ export default class WeChatArticleScreen extends Component {
 
     constructor(props) {
         super(props)
+        
         this.state = {
             tabs: [],
             firstLoading: false,

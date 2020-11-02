@@ -1,3 +1,7 @@
+/**
+ * 将字符串中的html标签转义
+ * @param {String} str 待处理字符串
+ */
 export function filterHtmlFromStr(str) {
     let content = str.replace(/<.+?>/g, '')
     content = content.replace(/&nbsp;/ig, '')
@@ -9,6 +13,9 @@ export function filterHtmlFromStr(str) {
     return content
 }
 
+/**
+ * 获取今天的日期，格式：yyyy-MM-DD
+ */
 export function getToday() {
     let date = new Date()
     let year = date.getFullYear()

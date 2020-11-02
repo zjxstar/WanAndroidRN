@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import { View, StyleSheet, Text, Alert } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import {
-    DrawerItem,
-} from '@react-navigation/drawer';
+import { DrawerItem } from '@react-navigation/drawer';
 import globalStyles from '../../styles/globalStyles'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Color from '../../styles/color';

@@ -26,6 +26,7 @@ class ArticleItem extends Component {
 
     constructor(props) {
         super(props)
+        
         this.toWebView = this.toWebView.bind(this)
         this.toLoginPage = this.toLoginPage.bind(this)
     }
@@ -48,6 +49,7 @@ class ArticleItem extends Component {
 
     render() {
         let { inCollectPage, isLogin, item} = this.props
+
         return (
             <TouchableWithoutFeedback style={styles.container} onPress={() => { this.toWebView(item) }}>
                 <View style={styles.itemWrapper} >

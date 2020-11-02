@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import globalStyles from '../../styles/globalStyles';
 import { WebView } from 'react-native-webview';
-import { Header, } from 'react-native-elements';
 import Color from '../../styles/color';
 import { getRealDP as dp } from '../../utils/screenUtil';
 import Ionicons from 'react-native-vector-icons/Ionicons';

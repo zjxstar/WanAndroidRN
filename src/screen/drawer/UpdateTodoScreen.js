@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback,TextInput } from 'react-native';
-import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
 import { getRealDP as dp } from '../../utils/screenUtil';
@@ -94,7 +93,8 @@ class UpdateTodoScreen extends PureComponent {
 
     render() {
         const { navigation } = this.props
-        const { curTitle, curContent, levelVisible, typeVisible, curLevel, curType, datePickerVisible, date, isLoading} = this.state
+        const { curTitle, curContent, levelVisible, typeVisible, curLevel, 
+            curType, datePickerVisible, date, isLoading} = this.state
         return (
             <View style={styles.container}>
                 <HeaderBar title='修改TODO' navigation={navigation} type='back' />

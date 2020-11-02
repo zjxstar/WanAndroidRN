@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, RefreshControl, FlatList } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { DEVICE_HEIGHT, getRealDP as dp } from '../utils/screenUtil';
 import Color from '../styles/color';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,9 +10,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 class CommonFlatList extends PureComponent {
     constructor(props) {
         super(props)
+
         this.state = {
             isShowTop: false
         }
+
         this.flatListRef = null
         this._handleScrollTop = this._handleScrollTop.bind(this)
         this._onScroll = this._onScroll.bind(this)
@@ -39,7 +41,6 @@ class CommonFlatList extends PureComponent {
     }
 
     render() {
-        // const { isRefreshing, toRefresh } = this.props
         return (
             <View style={styles.container}>
                 <FlatList

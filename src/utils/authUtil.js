@@ -3,6 +3,10 @@ import storageUtil from './storageUtil'
 const userInfoKey = '@userInfo'
 const cookieKey = '@cookie'
 
+/**
+ * 本地持久化数据
+ * 用户信息、登录Cookie
+ */
 export default class AuthUtil {
 
     static saveUserInfo = info => {

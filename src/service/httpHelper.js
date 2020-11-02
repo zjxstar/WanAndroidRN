@@ -14,7 +14,7 @@ const instance = axios.create({
     }
 })
 
-// 设置请求时的拦截器，补充Cookie
+// 设置请求时的拦截器
 instance.interceptors.request.use(
     async config => {
         if (config.method === 'post' && config.data) {
@@ -60,8 +60,7 @@ export function get(api, params) {
             })
             resolve(res)
         } catch (error) {
-            let errorMsg = `路径: ${api} \n报错信息: ${error}`
-            reject(errorMsg)
+            reject(`路径: ${api} \n报错信息: ${error}`)
         }
     })
 }
@@ -72,8 +71,7 @@ export function post(api, params) {
             let res = await instance.post(api, params);
             resolve(res);
         } catch (error) {
-            const errorMsg = `请求报错路径: ${api} \n请求报错信息: ${error}`
-            reject(errorMsg)
+            reject(`请求报错路径: ${api} \n请求报错信息: ${error}`)
         }
     })
 }

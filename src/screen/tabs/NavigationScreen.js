@@ -5,15 +5,7 @@ import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color';
 import { getRealDP as dp } from '../../utils/screenUtil';
 import { getNavigationData } from '../../api';
-import {
-    Placeholder,
-    PlaceholderMedia,
-    PlaceholderLine,
-    Fade
-} from "rn-placeholder";
-import { Image } from 'react-native-elements';
 import LoadingView from '../../components/LoadingView';
-
 
 /**
  * 导航
@@ -22,11 +14,13 @@ export default class NavigationScreen extends Component {
 
     constructor(props) {
         super(props)
+        
         this.state = {
             selectedIndex: 0,
             navDatas: [],
             isFetching: false,
         }
+
         this.renderLeftListItem = this.renderLeftListItem.bind(this)
         this.reqNavData = this.reqNavData.bind(this)
         this.toWebView = this.toWebView.bind(this)
@@ -38,7 +32,6 @@ export default class NavigationScreen extends Component {
 
     renderLeftListItem({item, index}) {
         let selectedIndex = this.state.selectedIndex
-        const { isFetching } = this.state
         return (
             <TouchableOpacity style={styles.listItemWrapper} onPress={() => this.onLeftItemClick(index)}>
                 <View style={selectedIndex === index ? styles.listItemChecked : styles.listItemUnChecked}>

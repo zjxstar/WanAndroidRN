@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import SystemCard from '../../components/SystemCard';
@@ -16,6 +16,7 @@ class SystemScreen extends PureComponent {
 
     constructor(props) {
         super(props)
+        
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshSystemTree = this.refreshSystemTree.bind(this)
         this.renderFooter = this.renderFooter.bind(this)

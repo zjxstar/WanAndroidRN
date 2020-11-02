@@ -57,7 +57,6 @@ export function fetchHomeTopArticles() {
     return dispatch => {
         return getHomeTopArticles().then(
             res => {
-               
                 dispatch(getHomeTopArticlesAction(res.data))}
         ).catch(
             err => console.log('home top article err: ', err)
@@ -102,7 +101,6 @@ export function fetchSystemTree() {
     return dispatch => {
         dispatch(startFetchDataAction(actionTypes.FETCH_DATA_TYPE_SYSTEM_TREE))
         return getSystemTree().then(
-            
             res => {
                 dispatch(getSystemTreeAction(res.data))}
         ).catch(

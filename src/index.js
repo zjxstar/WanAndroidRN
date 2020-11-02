@@ -1,4 +1,3 @@
-// index.js 
 // 构建页面导航配置
 import React from 'react';
 import { Text } from 'react-native'

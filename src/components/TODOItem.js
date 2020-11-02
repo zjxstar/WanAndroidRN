@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native';
 import Color from '../styles/color';
 import { getRealDP as dp } from '../utils/screenUtil';

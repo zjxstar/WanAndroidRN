@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import CommonFlatList from '../../components/CommonFlatList';
 import { SearchBar } from 'react-native-elements';

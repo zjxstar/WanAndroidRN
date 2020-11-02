@@ -16,6 +16,7 @@ export default class ProjectScreen extends Component {
 
     constructor(props) {
         super(props)
+        
         this.state = {
             tabs: [],
             firstLoading: false,

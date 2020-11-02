@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { View, StyleSheet, Text } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../styles/globalStyles'
 import ArticleItem from '../components/ArticleItem';
 import CommonFlatList from '../components/CommonFlatList';
@@ -15,6 +15,7 @@ class ArticleFlatList extends PureComponent {
 
     constructor(props) {
         super(props)
+
         this.state = {
             isFetching: false,
             page: 0,
@@ -22,6 +23,7 @@ class ArticleFlatList extends PureComponent {
             articles: [],
             isFullData: false,
         }
+        
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshList = this.refreshList.bind(this)
         this.loadMoreArticles = this.loadMoreArticles.bind(this)

@@ -23,6 +23,7 @@ class ProjectItem extends PureComponent {
 
     constructor(props) {
         super(props)
+        
         this.toWebView = this.toWebView.bind(this)
         this.toLoginPage = this.toLoginPage.bind(this)
     }

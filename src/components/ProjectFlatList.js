@@ -15,6 +15,7 @@ class ProjectFlatList extends PureComponent {
 
     constructor(props) {
         super(props)
+
         this.state = {
             isFetching: false,
             page: 1,
@@ -22,6 +23,7 @@ class ProjectFlatList extends PureComponent {
             projects: [],
             isFullData: false,
         }
+        
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshList = this.refreshList.bind(this)
         this.loadMoreProjects = this.loadMoreProjects.bind(this)

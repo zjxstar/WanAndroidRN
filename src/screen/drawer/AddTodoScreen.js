@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback,TextInput } from 'react-native';
-import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
 import { getRealDP as dp } from '../../utils/screenUtil';
