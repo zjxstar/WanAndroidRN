@@ -1,4 +1,3 @@
-// index.js 
 // 构建页面导航配置
 import React from 'react';
 import { Text } from 'react-native'
@@ -12,7 +11,9 @@ import NavigationScreen from './screen/tabs/NavigationScreen';
 import ProjectScreen from './screen/tabs/ProjectScreen';
 import CustomDrawerContent from './screen/drawer/CustomDrawerContent';
 import AboutScreen from './screen/drawer/AboutScreen';
-import FavorScreen from './screen/drawer/FavorScreen';
+import CollectScreen from './screen/drawer/CollectScreen';
+import TodoScreen from './screen/drawer/TodoScreen';
+import TodoDetailScreen from './screen/drawer/TodoDetailScreen';
 import LoginScreen from './screen/drawer/LoginScreen';
 import RegisterScreen from './screen/drawer/RegisterScreen';
 import SearchScreen from './screen/article/SearchScreen';
@@ -20,6 +21,8 @@ import WebViewScreen from './screen/article/WebViewScreen';
 import ArticleTabScreen from './screen/article/ArticleTabScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getRealDP as dp } from './utils/screenUtil';
+import AddTodoScreen from './screen/drawer/AddTodoScreen';
+import UpdateTodoScreen from './screen/drawer/UpdateTodoScreen';
 
 const Tab = createBottomTabNavigator()
 
@@ -88,7 +91,11 @@ function RootStack() {
     return (
         <Stack.Navigator headerMode='none'>
             <Stack.Screen name="Drawer" component={DrawerStack} options={{ headerShown: false }} />
-            <Stack.Screen name="Favor" component={FavorScreen} />
+            <Stack.Screen name="COLLECT" component={CollectScreen} />
+            <Stack.Screen name="TODO" component={TodoScreen} />
+            <Stack.Screen name="TODODetail" component={TodoDetailScreen} />
+            <Stack.Screen name="AddTodo" component={AddTodoScreen} />
+            <Stack.Screen name="UpdateTodo" component={UpdateTodoScreen} />
             <Stack.Screen name="About" component={AboutScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />

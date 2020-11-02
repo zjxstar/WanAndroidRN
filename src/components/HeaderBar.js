@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
-import { Header, Avatar, } from 'react-native-elements';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Header, Avatar } from 'react-native-elements';
 import Color from '../styles/color';
 import PropTypes from 'prop-types';
 import { getRealDP as dp } from '../utils/screenUtil';
+import { connect } from 'react-redux';
 
 /**
  * 顶部导航栏
@@ -12,33 +13,34 @@ import { getRealDP as dp } from '../utils/screenUtil';
 const propTypes = {
     title: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired,
-    isLogin: PropTypes.bool
+    type: PropTypes.string,
+    right: PropTypes.object,
 }
 
 const defaultProps = {
     title: '玩Android',
-    isLogin: false,
+    type: 'avatar',
 }
 
 class HeaderBar extends PureComponent {
 
     constructor(props) {
         super(props)
+        
         this.renderHeaderAvatar = this.renderHeaderAvatar.bind(this)
     }
 
     renderHeaderAvatar() {
-        const { navigation, isLogin } = this.props
+        const { navigation, isLogin, userInfo } = this.props
+        
         if (isLogin) {
+            let avatarName = userInfo.username.substring(0, 1)
             return (
-                <Avatar
-                    rounded
-                    source={{
-                        uri: 'https://wx.qlogo.cn/mmopen/vi_32/eudayfvoav2bibTSsiaxWyLW6gMqTF32RPT6hULQ9Z6wrtjU97SkVOLOdlYujdKDFic34wuib9dwIcBQbUkRtJI2MA/132'
-                    }}
-                    onPress={() => navigation.toggleDrawer()}
-                    size={dp(40)}
-                    activeOpacity={0.7} />
+                <TouchableWithoutFeedback onPress={() => navigation.toggleDrawer()}>
+                    <View style={{ backgroundColor: Color.AVATAR_BACKGROUND, width: dp(40), height: dp(40), borderRadius:dp(20), alignItems:'center'}}>
+                        <Text style={{color: Color.WHITE}}>{avatarName}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             )
         } else {
             return (
@@ -53,7 +55,38 @@ class HeaderBar extends PureComponent {
     }
 
     render() {
-        const { navigation, title } = this.props
+        const { navigation, title, type, right } = this.props
+        if (type === 'back') {
+            if (right) {
+                return (
+                    <Header
+                        containerStyle={
+                            {
+                                // 把分割线的颜色设为主题色
+                                borderBottomColor: Color.THEME
+                            }
+                        }
+                        backgroundColor={Color.THEME}
+                        leftComponent={{ icon: 'chevron-left', color: Color.WHITE, size: dp(40), onPress: () => navigation.goBack() }}
+                        centerComponent={{ text: title, style: { color: Color.WHITE, fontSize: dp(30) } }}
+                        rightComponent={right}
+                    />
+                ) 
+            }
+            return (
+                <Header
+                    containerStyle={
+                        {
+                            // 把分割线的颜色设为主题色
+                            borderBottomColor: Color.THEME
+                        }
+                    }
+                    backgroundColor={Color.THEME}
+                    leftComponent={{ icon: 'chevron-left', color: Color.WHITE, size: dp(40), onPress: () => navigation.goBack() }}
+                    centerComponent={{ text: title, style: { color: Color.WHITE, fontSize: dp(30) } }}
+                />
+            )
+        }
         return (
             <Header
                 containerStyle={
@@ -74,4 +107,11 @@ class HeaderBar extends PureComponent {
 HeaderBar.propTypes = propTypes
 HeaderBar.defaultProps = defaultProps
 
-export default HeaderBar
+const mapStateToProps = state => {
+    return {
+        isLogin: state.user.isLogin,
+        userInfo: state.user.userInfo,
+    }
+}
+
+export default connect(mapStateToProps)(HeaderBar)

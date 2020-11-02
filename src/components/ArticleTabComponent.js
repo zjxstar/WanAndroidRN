@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { View, StyleSheet, Text } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../styles/globalStyles'
 import Color from '../styles/color'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -12,6 +12,7 @@ class ArticleTabComponent extends PureComponent {
     render() {
         const { data } = this.props
         const Tab = createMaterialTopTabNavigator();
+        
         return (
             <View style={globalStyles.container}>
                 <Tab.Navigator

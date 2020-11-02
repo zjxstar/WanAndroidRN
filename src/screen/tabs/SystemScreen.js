@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import SystemCard from '../../components/SystemCard';
@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { fetchSystemTree } from '../../actions'
 import CommonFlatList from '../../components/CommonFlatList';
 import { getRealDP as dp } from '../../utils/screenUtil';
+import LoadingView from '../../components/LoadingView';
 
 /**
  * 知识体系
@@ -15,6 +16,7 @@ class SystemScreen extends PureComponent {
 
     constructor(props) {
         super(props)
+        
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshSystemTree = this.refreshSystemTree.bind(this)
         this.renderFooter = this.renderFooter.bind(this)
@@ -41,7 +43,6 @@ class SystemScreen extends PureComponent {
     }
 
     refreshSystemTree() {
-        console.log('refresh sys tree')
         this.props.reqSystemTree()
     }
 
@@ -51,13 +52,18 @@ class SystemScreen extends PureComponent {
             <View style={globalStyles.container}>
                 <HeaderBar title='知识体系' navigation={navigation} />
 
-                <CommonFlatList
-                    data={systemTree}
-                    renderItem={this.renderListItem}
-                    keyExtractor={(item, index) => item.id.toString()}
-                    ListFooterComponent={this.renderFooter}
-                    refreshing={isFetching}
-                    onRefresh={this.refreshSystemTree} />
+                {isFetching && systemTree.length === 0 && (
+                    <LoadingView />
+                )} 
+
+                {!isFetching && (
+                    <CommonFlatList
+                        data={systemTree}
+                        renderItem={this.renderListItem}
+                        keyExtractor={(item, index) => item.id.toString()}
+                        ListFooterComponent={this.renderFooter}/>
+                )}
+                
             </View>
         )
     }

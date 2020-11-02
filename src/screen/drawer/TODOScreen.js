@@ -4,62 +4,37 @@ import globalStyles from '../../styles/globalStyles'
 import HeaderBar from '../../components/HeaderBar';
 import Color from '../../styles/color'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ArticleFlatList from '../../components/ArticleFlatList';
 import { getRealDP as dp } from '../../utils/screenUtil';
-import { getWXTabs } from '../../api';
-import LoadingView from '../../components/LoadingView';
+import TodoFlatList from '../../components/TodoFlatList';
 
 /**
- * 公众号
+ * TODO
  */
-export default class WeChatArticleScreen extends Component {
+export default class TodoScreen extends Component {
 
     constructor(props) {
         super(props)
-        
         this.state = {
-            tabs: [],
-            firstLoading: false,
+            tabs: [
+                { title: '工作', id: 'tab1', type: 1 }, 
+                { title: '学习', id: 'tab2', type: 2 }, 
+                { title: '生活', id: 'tab3', type: 3 },]
         }
     }
 
-    componentDidMount() {
-        this.setState({
-            firstLoading: true,
-        })
-        getWXTabs().then(res => {
-            this.setState({
-                tabs: res.data,
-                firstLoading: false,
-            })
-        }).catch(err => {
-            console.log('get wx tabs err: ', err)
-            this.setState({
-                firstLoading: false,
-            })
-        })
-    }
-
-
     render() {
         const { navigation } = this.props
-        const { tabs, firstLoading } = this.state
         const Tab = createMaterialTopTabNavigator();
 
         return (
             <View style={globalStyles.container}>
-                <HeaderBar title='公众号' navigation={navigation} />
-
-                {firstLoading && tabs.length === 0 && (
-                    <LoadingView />
-                )}
-
-                {!firstLoading && tabs.length > 0 && (
+                <HeaderBar title='TODO' navigation={navigation} type='back'
+                    right={{ icon: 'add', color: Color.WHITE, size: dp(40), onPress: () => navigation.navigate('AddTodo') }}/>
                     <Tab.Navigator
                         lazy={true}
                         backBehavior='none'
                         tabBarOptions={{
-                            scrollEnabled: true,
+                            scrollEnabled: false,
                             activeTintColor: Color.WHITE,
                             labelStyle: {
                                 fontFamily: '',
@@ -67,14 +42,11 @@ export default class WeChatArticleScreen extends Component {
                                 textTransform: 'none',
                             },
                             tabStyle: {
-                                width: dp(200),
                                 height: dp(100),
                             },
                             indicatorStyle: {
                                 backgroundColor: Color.WHITE,
-                                width: dp(100),
                                 height: dp(4),
-                                marginLeft: dp(50)
                             },
                             style: {
                                 backgroundColor: Color.THEME,
@@ -82,12 +54,11 @@ export default class WeChatArticleScreen extends Component {
                             }
                         }}>
                         {this.state.tabs.map(item => (
-                        <Tab.Screen key={item.id.toString()} name={item.name} options={{ tabBarLabel: item.name }}>
-                            {props => <ArticleFlatList {...props} cid={item.id} isWX={true}/>}
-                        </Tab.Screen>
-                    ))}
+                            <Tab.Screen key={item.id} name={item.title} options={{ tabBarLabel: item.title }}>
+                                {props => <TodoFlatList {...props} type={item.type} />}
+                            </Tab.Screen>
+                        ))}
                     </Tab.Navigator>
-                )}
             </View>
         )
     }

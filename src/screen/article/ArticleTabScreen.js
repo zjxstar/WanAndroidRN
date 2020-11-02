@@ -1,11 +1,8 @@
 import React, { PureComponent } from 'react';
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import globalStyles from '../../styles/globalStyles';
 import HeaderBar from '../../components/HeaderBar';
 import ArticleTabComponent from '../../components/ArticleTabComponent';
-import { Header, Avatar, } from 'react-native-elements';
-import Color from '../../styles/color';
-import { getRealDP as dp } from '../../utils/screenUtil';
 
 /**
  * 顶部Tab文章列表页面
@@ -21,7 +18,7 @@ class ArticleTabScreen extends PureComponent {
         const { classification } = this.props.route.params
         return (
             <View style={globalStyles.container}>
-                <HeaderBar title={classification.name} navigation={navigation} />
+                <HeaderBar title={classification.name} navigation={navigation} type='back' />
                 <ArticleTabComponent data={classification} />
             </View>
       )

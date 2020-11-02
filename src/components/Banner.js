@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'react-native-elements';
 import Swiper from 'react-native-swiper'
 import PropTypes from 'prop-types';
@@ -24,9 +24,11 @@ class Banner extends PureComponent {
 
     constructor(props) {
         super(props)
+
         this.state = {
             currentBannerIndex: 0,
         }
+
         this.getCurrentImgIndex = this.getCurrentImgIndex.bind(this)
         this.toWebView = this.toWebView.bind(this)
     }
@@ -45,11 +47,12 @@ class Banner extends PureComponent {
     }
 
     render() {
-        const { dataArr, navigation } = this.props
+        const { dataArr } = this.props
         let dataCount = dataArr.length
         if (!dataCount) {
             return <View style={styles.defaultBg} />
         }
+        
         return (
             <View style={styles.bannerContainer}>
                 <Swiper

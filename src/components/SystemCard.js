@@ -8,8 +8,10 @@ import globalStyles from '../styles/globalStyles';
  * 知识体系的卡片
  */
 class SystemCard extends PureComponent {
+    
     constructor(props) {
         super(props)
+
         this.toSystemDetail = this.toSystemDetail.bind(this)
     }
 

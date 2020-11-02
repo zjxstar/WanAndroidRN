@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
-import { View, StyleSheet, Text } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../styles/globalStyles'
 import ArticleItem from '../components/ArticleItem';
 import CommonFlatList from '../components/CommonFlatList';
 import { getSystemTreeArticles, getWXArticles } from '../api';
 import { getRealDP as dp } from '../utils/screenUtil';
+import { favorArticleInner, uncollectArticleInList } from '../api';
 
 /**
  * 文章列表
@@ -14,6 +15,7 @@ class ArticleFlatList extends PureComponent {
 
     constructor(props) {
         super(props)
+
         this.state = {
             isFetching: false,
             page: 0,
@@ -21,10 +23,12 @@ class ArticleFlatList extends PureComponent {
             articles: [],
             isFullData: false,
         }
+        
         this.renderListItem = this.renderListItem.bind(this)
         this.refreshList = this.refreshList.bind(this)
         this.loadMoreArticles = this.loadMoreArticles.bind(this)
         this.renderBlankDivider = this.renderBlankDivider.bind(this)
+        this.favorArticle = this.favorArticle.bind(this)
     }
 
     componentDidMount() {
@@ -34,8 +38,37 @@ class ArticleFlatList extends PureComponent {
     renderListItem({item, index}) {
         const { navigation } = this.props
         return (
-            <ArticleItem navigation={navigation} item={item} />
+            <ArticleItem navigation={navigation} item={item} onFavorClick={() => this.favorArticle(item, index)}/>
         )
+    }
+
+
+    favorArticle(item, index) {
+        if (item.collect) {
+            // 取消收藏
+            uncollectArticleInList(item.id).then(res => {
+                let tempArticles = [...this.state.articles]
+                tempArticles[index].collect = false
+                this.setState({
+                    articles: tempArticles
+                })
+                global.toast.show('已取消收藏')
+            }).catch(err => {
+                global.toast.show(err)
+            })
+        } else {
+            // 收藏文章
+            favorArticleInner(item.id).then(res => {
+                let tempArticles = [...this.state.articles]
+                tempArticles[index].collect = true
+                this.setState({
+                    articles: tempArticles
+                })
+                global.toast.show('收藏成功')
+            }).catch(err => {
+                global.toast.show(err)
+            })
+        }
     }
 
     renderBlankDivider() {
@@ -47,7 +80,6 @@ class ArticleFlatList extends PureComponent {
     refreshList() {
         const { cid, isWX } = this.props
         let that = this
-        console.log('fresh system tree a cid: ', cid)
         this.setState({
             isFetching: true
         })
@@ -101,7 +133,6 @@ class ArticleFlatList extends PureComponent {
             return
         }
         let that = this
-        console.log('load more s t a page: ', this.state.page, ' cid: ', cid)
         if (isWX) {
             getWXArticles(cid, this.state.page).then(
                 res => {

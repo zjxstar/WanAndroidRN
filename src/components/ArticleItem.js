@@ -1,18 +1,34 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Color from '../styles/color';
 import Tag from './Tag';
 import { getRealDP as dp } from '../utils/screenUtil';
+import { filterHtmlFromStr } from '../utils/commonUtil';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 /**
  * 文章列表Item
  */
-class ArticleItem extends PureComponent {
+
+const propTypes = {
+    inCollectPage: PropTypes.bool,
+    onFavorClick: PropTypes.func
+}
+
+const defaultProps = {
+    inCollectPage: false,
+    onFavorClick: () => {}
+}
+
+class ArticleItem extends Component {
 
     constructor(props) {
         super(props)
+        
         this.toWebView = this.toWebView.bind(this)
+        this.toLoginPage = this.toLoginPage.bind(this)
     }
 
     toWebView(item) {
@@ -25,28 +41,47 @@ class ArticleItem extends PureComponent {
         })
     }
 
+    toLoginPage() {
+        global.toast.show('请先登录')
+        const {navigation } = this.props
+        navigation.navigate('Login')
+    }
+
     render() {
-        let { item } = this.props
+        let { inCollectPage, isLogin, item} = this.props
+
         return (
             <TouchableWithoutFeedback style={styles.container} onPress={() => { this.toWebView(item) }}>
                 <View style={styles.itemWrapper} >
                     <View style={styles.lineOne}>
                         <View style={styles.lineContentLeft}>
-                            {item.type === 1 && <Tag tagName='置顶' tagColor='red'/>}
-                            {item.fresh && <Tag tagName='新' tagColor='red'/>}
-                            {item.tags.map((tag) => (<Tag key={tag.url} tagName={tag.name} tagColor='green'/>))}
-                            <Text style={{ marginLeft: dp(2), fontSize: dp(26), color: Color.TEXT_DARK}}>{item.author || item.shareUser}</Text>
+                            {item.type === 1 && <Tag tagName='置顶' tagColor='red' />}
+                            {item.fresh && <Tag tagName='新' tagColor='red' />}
+                            {item.tags && item.tags.map((tag) => (<Tag key={tag.url} tagName={tag.name} tagColor='green' />))}
+                            <Text style={{ marginLeft: dp(2), fontSize: dp(26), color: Color.TEXT_DARK }}>{item.author || item.shareUser || item.chapterName}</Text>
                         </View>
-                        <Text style={{ fontSize: dp(26), color: Color.TEXT_DARK}}>{item.niceDate}</Text>
+                        <Text style={{ fontSize: dp(26), color: Color.TEXT_DARK }}>{item.niceDate}</Text>
                     </View>
                     <View style={styles.lineTwo}>
-                        <Text style={{fontSize: dp(32), color: Color.TEXT_MAIN}} numberOfLines={1}>{item.title}</Text>
+                        <Text style={{ fontSize: dp(32), color: Color.TEXT_MAIN }} numberOfLines={1}>{filterHtmlFromStr(item.title)}</Text>
                     </View>
                     <View style={styles.lineThree}>
-                        <Text style={{fontSize: dp(20), color: Color.TEXT_LIGHT}}>{item.superChapterName} / {item.chapterName}</Text>
-                        <TouchableWithoutFeedback onPress={() => {console.log('collect: ', item.id)}}>
-                            <Ionicons name='md-heart' size={dp(40)} color={item.collect ? Color.COLLECT : Color.ICON_GRAY} />
-                        </TouchableWithoutFeedback>
+                        {inCollectPage &&
+                            <Text style={{ fontSize: dp(20), color: Color.TEXT_LIGHT }}>{item.chapterName}</Text>
+                        }
+                        {!inCollectPage &&
+                            <Text style={{ fontSize: dp(20), color: Color.TEXT_LIGHT }}>{item.superChapterName} / {item.chapterName}</Text>
+                        }
+                        {!isLogin && (
+                            <TouchableWithoutFeedback onPress={() => { this.toLoginPage() }}>
+                                <Ionicons name='md-heart' size={dp(40)} color={Color.ICON_GRAY} />
+                            </TouchableWithoutFeedback>
+                        )}
+                        {isLogin && (
+                            <TouchableWithoutFeedback onPress={this.props.onFavorClick}>
+                                <Ionicons name='md-heart' size={dp(40)} color={item.collect ? Color.COLLECT : Color.ICON_GRAY} />
+                            </TouchableWithoutFeedback>
+                        )}
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -93,4 +128,13 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ArticleItem
+ArticleItem.propTypes = propTypes
+ArticleItem.defaultProps = defaultProps
+
+const mapStateToProps = state => {
+    return {
+        isLogin: state.user.isLogin,
+    }
+}
+
+export default connect(mapStateToProps)(ArticleItem)
