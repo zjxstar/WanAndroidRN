@@ -4,7 +4,7 @@
 
 使用 React-Native 开发的玩Android APP，使用鸿洋大神提供的 Open Api 完成。
 
-**注意：**本人只做了 Android 版本，没有适配 iOS ，仅供 RN 入门学习使用。代码不完善之处请谅解。
+**注意：** 本人只做了 Android 版本，没有适配 iOS ，仅供 RN 入门学习使用。代码不完善之处请谅解。
 
 [WanAndroid官网](https://www.wanandroid.com/)
 
