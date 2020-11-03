@@ -30,13 +30,13 @@
 
 其他功能模块：**登录/注册**、**搜索**、**我的收藏**、**TODO**等。
 
-![应用截图1](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/meitu_1.jpg)
+![应用截图1](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/a.jpg)
 
-![应用截图2](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/meitu_2.jpg)
+![应用截图2](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/b.jpg)
 
-![应用截图3](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/meitu_3.jpg)
+![应用截图3](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/c.jpg)
 
-![应用截图4](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/meitu_4.jpg)
+![应用截图4](https://github.com/zjxstar/WanAndroidRN/blob/master/screenshots/d.jpg)
 
 ## 遇到的问题和解决方案
 
